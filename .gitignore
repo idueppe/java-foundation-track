@@ -1,4 +1,9 @@
-*.class
+*.class    
+/target/
+/.settings/
+.projects
+.classes
+.springbeans
 
 # Package Files #
 *.jar
