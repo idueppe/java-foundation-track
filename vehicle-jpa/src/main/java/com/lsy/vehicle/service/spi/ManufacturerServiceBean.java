@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lsy.vehicle.dao.ManufacturerDao;
 import com.lsy.vehicle.domain.Manufacturer;
-import com.lsy.vehicle.service.CannotDeleteEngineException;
 import com.lsy.vehicle.service.ManufacturerAlreadyExistsException;
 import com.lsy.vehicle.service.ManufacturerService;
 
