@@ -46,5 +46,7 @@ public class ManufacturerServiceBean implements ManufacturerService {
 	public void delete(Manufacturer manufacturer) {
 		manuDao.delete(manufacturer);
 	}
+	
+	
 
 }
