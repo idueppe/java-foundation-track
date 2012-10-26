@@ -3,6 +3,7 @@ package com.lsy.vehicle.controller;
 import java.util.List;
 
 import com.lsy.vehicle.dto.EngineDto;
+import com.lsy.vehicle.service.EngineDoesNotExistException;
 
 public interface EngineController {
 
@@ -10,6 +11,6 @@ public interface EngineController {
     
     public void addEngine(EngineDto engine);
     
-    public void deleteEngine(EngineDto engine);
+    public void deleteEngine(EngineDto engine) throws EngineDoesNotExistException;
     
 }

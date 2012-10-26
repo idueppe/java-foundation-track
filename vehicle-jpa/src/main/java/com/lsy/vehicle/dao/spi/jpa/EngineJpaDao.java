@@ -25,6 +25,14 @@ public class EngineJpaDao implements EngineDao {
         TypedQuery<Engine> query = em.createQuery("SELECT e FROM Engine e", Engine.class);
         return query.getResultList();
     }
+    
+	@Override
+	public List<Engine> findByManufacturer(String manufacturerName) {
+		TypedQuery<Engine> query = em.createQuery("SELECT e FROM Engine e WHERE e.manufacturer.name = :name", Engine.class);
+		query.setParameter("name", manufacturerName);
+		return query.getResultList();
+	}
+
 
     @Override
     public Engine find(Long id) {
@@ -45,5 +53,6 @@ public class EngineJpaDao implements EngineDao {
     public Engine update(Engine entity) {
         return em.merge(entity);
     }
+
 
 }

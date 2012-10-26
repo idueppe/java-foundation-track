@@ -12,6 +12,8 @@ public interface ManufacturerService {
     
     public Manufacturer byName(String manufacturerName);
 
-    public boolean doesManufacturerExists(String manufacturerName);
+    public boolean isExisting(String manufacturerName);
+    
+    public void delete(Manufacturer manufacturer);
     
 }

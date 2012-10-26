@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lsy.vehicle.dao.ManufacturerDao;
 import com.lsy.vehicle.domain.Manufacturer;
+import com.lsy.vehicle.service.CannotDeleteEngineException;
 import com.lsy.vehicle.service.ManufacturerAlreadyExistsException;
 import com.lsy.vehicle.service.ManufacturerService;
 
@@ -25,7 +26,7 @@ public class ManufacturerServiceBean implements ManufacturerService {
     @Override
     @Transactional
     public void addManufacturer(String manufacturerName) throws ManufacturerAlreadyExistsException {
-        if (doesManufacturerExists(manufacturerName)) {
+        if (isExisting(manufacturerName)) {
             throw new ManufacturerAlreadyExistsException(manufacturerName);
         }
         Manufacturer manufacturer = new Manufacturer();
@@ -33,7 +34,7 @@ public class ManufacturerServiceBean implements ManufacturerService {
         manuDao.create(manufacturer);
     }
 
-    public boolean doesManufacturerExists(String manufacturerName) {
+    public boolean isExisting(String manufacturerName) {
         return manuDao.findManufacturerByName(manufacturerName) != null;
     }
 
@@ -41,5 +42,10 @@ public class ManufacturerServiceBean implements ManufacturerService {
     public Manufacturer byName(String manufacturerName) {
         return manuDao.findManufacturerByName(manufacturerName);
     }
+
+	@Override
+	public void delete(Manufacturer manufacturer) {
+		manuDao.delete(manufacturer);
+	}
 
 }

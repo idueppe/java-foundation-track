@@ -10,6 +10,7 @@ public class EngineDto implements Serializable {
 
     private Long engineId;
     private EngineType engineType;
+    private String model;
 
     public Long getEngineId() {
         return engineId;
@@ -26,5 +27,13 @@ public class EngineDto implements Serializable {
     public void setEngineType(EngineType engineType) {
         this.engineType = engineType;
     }
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
 
 }

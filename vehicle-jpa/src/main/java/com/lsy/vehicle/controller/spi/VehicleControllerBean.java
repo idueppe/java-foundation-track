@@ -67,7 +67,6 @@ public class VehicleControllerBean implements VehicleController {
 
     @Override
     public void deleteVehicle(VehicleDto vehicle) {
-        // TODO Bitte implementiert diese Methode
     }
 
 }

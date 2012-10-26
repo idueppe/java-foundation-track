@@ -56,7 +56,7 @@ public class ManufacturerServiceTest {
     public void testAddManufacturer() throws ManufacturerAlreadyExistsException {
         String name = "JUNIT MANUFACTURER";
         manufacturerService.addManufacturer(name);
-        assertTrue("Manufacturer should exist.", manufacturerService.doesManufacturerExists(name));
+        assertTrue("Manufacturer should exist.", manufacturerService.isExisting(name));
     }
     
     @Test(expected=ManufacturerAlreadyExistsException.class)

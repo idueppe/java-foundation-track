@@ -19,7 +19,11 @@ import com.lsy.vehicle.domain.Vehicle;
 @Service
 public class DBFixture {
 
-    @PersistenceUnit(unitName="vehicle-foundation")
+    public static final String MANUFACTURER_VW = "VW";
+
+	public static final String MANUFACTURER_BUGGATI = "Buggati";
+
+	@PersistenceUnit(unitName="vehicle-foundation")
     private EntityManagerFactory emf;
     
     private EntityManager em;
@@ -35,16 +39,18 @@ public class DBFixture {
     private Engine currentEngine;
 
     public void createDefaultDataInDatabase() {
-        this.createManufacturer("Buggati")
+        this.createManufacturer(MANUFACTURER_BUGGATI)
             .addVehicle()
             .setModelName("Veyron")
             .setNettoPrice(1_200_000.00)
             .addEngine(EngineType.PETROL)
+            .ownedByManufacturer()
             .addVehicle()
             .setModelName("Veyron Diesel")
             .setNettoPrice(999_000.00)
             .addEngine(EngineType.DIESEL)
-            .createManufacturer("VW")
+            .ownedByManufacturer()
+            .createManufacturer(MANUFACTURER_VW)
             .addVehicle()
             .setModelName("Trabbi")
             .addEngine(EngineType.PETROL)
@@ -121,11 +127,17 @@ public class DBFixture {
         return this;
     }
 
-    private DBFixture addVehicle() {
+    public DBFixture addVehicle() {
         currentVehicle = new Vehicle();
         vehicles.add(currentVehicle);
         currentManufacturer.addVehicle(currentVehicle);
         return this;
+    }
+    
+    public DBFixture ownedByManufacturer() {
+    	currentManufacturer.getOwnedEngines().add(currentEngine);
+    	currentEngine.setManufacturer(currentManufacturer);
+    	return this;
     }
 
     public DBFixture createManufacturer(String name) {
@@ -154,5 +166,10 @@ public class DBFixture {
     public List<Vehicle> getVehicles() {
         return Collections.unmodifiableList(vehicles);
     }
+
+
+	public Engine firstEngine() {
+		return engines.get(0);
+	}
 
 }

@@ -3,6 +3,7 @@ package com.lsy.vehicle.controller;
 import java.util.List;
 
 import com.lsy.vehicle.dto.ManufacturerDto;
+import com.lsy.vehicle.service.ManufacturerAlreadyExistsException;
 
 public interface ManufacturerController {
 
@@ -10,7 +11,7 @@ public interface ManufacturerController {
     
     public List<ManufacturerDto> allManufactures();
     
-    public void addManufacturer(String manufacturerName);
+    public void addManufacturer(String manufacturerName) throws ManufacturerAlreadyExistsException;
     
     public void deleteManufacturer(String manufacturerName);
     

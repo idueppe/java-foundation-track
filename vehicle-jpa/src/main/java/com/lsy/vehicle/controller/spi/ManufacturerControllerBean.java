@@ -10,11 +10,12 @@ import com.lsy.vehicle.controller.ManufacturerController;
 import com.lsy.vehicle.converter.ManufacturerConverter;
 import com.lsy.vehicle.domain.Manufacturer;
 import com.lsy.vehicle.dto.ManufacturerDto;
+import com.lsy.vehicle.service.ManufacturerAlreadyExistsException;
 import com.lsy.vehicle.service.ManufacturerService;
 
 @Service
 public class ManufacturerControllerBean implements ManufacturerController {
-    
+	
     @Autowired
     private ManufacturerService manufacturerService;
     
@@ -30,18 +31,19 @@ public class ManufacturerControllerBean implements ManufacturerController {
 
     @Override
     public List<ManufacturerDto> allManufactures() {
-        // TODO Bitte implementiert diese Methode.
-        return null;
+    	List<Manufacturer> allManufacturers = manufacturerService.findAll();
+        return manufacturerConverter.convert(allManufacturers);
     }
 
     @Override
-    public void addManufacturer(String manufacturerName) {
-        // TODO Bitte implementiert diese Methode.
+    public void addManufacturer(String manufacturerName) throws ManufacturerAlreadyExistsException {
+		manufacturerService.addManufacturer(manufacturerName);
     }
 
     @Override
     public void deleteManufacturer(String manufacturerName) {
-        // TODO Bitte implementiert diese Methode.
+    	Manufacturer manufacturer = manufacturerService.byName(manufacturerName);
+    	manufacturerService.delete(manufacturer);
     }
 
 }
