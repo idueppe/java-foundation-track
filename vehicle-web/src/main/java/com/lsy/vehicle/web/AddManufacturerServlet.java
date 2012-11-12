@@ -29,40 +29,59 @@ public class AddManufacturerServlet extends HttpServlet {
 	private ManufacturerController controller;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		response.setContentType("text/html");
 		
 		HtmlWriter html = new HtmlWriter(response.getWriter());
-		html.defaultHeader().beginHtml().beginMain().beginPart("Add Manufacturer");
+
+		html.defaultHeader().beginHtml().beginMain();
+
+		printForm(html);
+		printActionBar(html);
 		
+		html.closeMain();
+		html.footer().closeHtml();
+	}
+
+
+	private void printForm(HtmlWriter html) {
+		html.beginFluid().beginPart("Add Manufacturer");
 		html.println("<form action=\"AddManufacturer\" method=\"POST\">");
+			html.print("<fieldset>");
 			html.println("<label>Name:</label>");
 			html.println("<input type=\"text\" size=\"40\" name=\"manufacturerName\">");
+			html.println("<br/>");
 			html.println("<button type=\"submit\" class=\"btn\">Anlegen</button>");
+			html.print("</fieldset>");
 		html.println("</form>");
-		
-		html.closePart().closeMain();
-		html.beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück");
-		html.footer().closeHtml();
+		html.closePart().closeFluid();
+	}
+	
 
+	private void printActionBar(HtmlWriter html) {
+		html.beginFluid();
+		html.beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück");
+		html.closeFluid();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String manufacturerName = request.getParameter("manufacturerName");
 		
 		HtmlWriter html = new HtmlWriter(response.getWriter());
-		html.defaultHeader().beginHtml().beginMain().beginPart("Add Manufacturer");
+		html.defaultHeader().beginHtml().beginMain().beginFluid().beginPart("Add Manufacturer");
 
 		try {
 			controller.addManufacturer(manufacturerName);
-			html.print("<p class=\"text-success\">Manufacturer "+manufacturerName+" erfolgreich angelegt.</p>");
+			html.print("<p class=\"text-success\">Manufacturer "+manufacturerName+" created successfully.</p>");
 		} catch (ManufacturerAlreadyExistsException e) {
-			html.print("<p class=\"text-error\">Beim anlegen des Manufacturer "+manufacturerName+" trat ein fehler auf.</p>");
-			html.print("<p class=\"text-error\">"+e.getMessage()+"</p>");
+			html.print("<p class=\"text-error\"> "+e.getMessage()+"</p>");
 		}
 		
-		html.closePart().closeMain();
+		html.closePart().closeFluid();
+		html.beginFluid();
 		html.beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück");
+		html.closeFluid();
+		html.closeMain();
+		
 		html.footer().closeHtml();
 	}
 

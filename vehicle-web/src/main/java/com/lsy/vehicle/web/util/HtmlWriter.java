@@ -51,6 +51,16 @@ public class HtmlWriter {
 		return this;
 	}
 	
+	public HtmlWriter beginFluid() {
+		print("<div class=\"row-fluid marketing\">");
+		return this;
+	}
+	
+	public HtmlWriter closeFluid() {
+		print("</div>");
+		return this;
+	}
+	
 	public HtmlWriter closeMain() {
 		print("</div>");
 		print("</body>");
@@ -87,7 +97,7 @@ public class HtmlWriter {
 	}
 	
 	public HtmlWriter beginTable() {
-		print("<table>");
+		print("<table class=\"table table-hover\">");
 		return this;
 	}
 	
@@ -124,6 +134,26 @@ public class HtmlWriter {
 	
 	public HtmlWriter closePart() {
 		print("</div>");
+		return this;
+	}
+	
+	public HtmlWriter beginHeadRow() {
+		print("<thead>");
+		return this;
+	}
+
+	public HtmlWriter closeHeadRow() {
+		print("</thead>");
+		return this;
+	}
+
+	public HtmlWriter beginHead() {
+		print("<th>");
+		return this;
+	}
+
+	public HtmlWriter closeHead() {
+		print("</th>");
 		return this;
 	}
 

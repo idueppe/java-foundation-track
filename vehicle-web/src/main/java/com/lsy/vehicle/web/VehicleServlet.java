@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.lsy.vehicle.controller.VehicleController;
+import com.lsy.vehicle.dto.ManufacturerDto;
 import com.lsy.vehicle.dto.VehicleDto;
 import com.lsy.vehicle.web.util.HtmlWriter;
 
@@ -32,28 +33,42 @@ public class VehicleServlet extends HttpServlet {
 		String manufacturerName = request.getParameter("manufacturer");
 
 		response.setContentType("text/html");
-		
 		HtmlWriter html = new HtmlWriter(response.getWriter());
+		
 		html.beginHtml().defaultHeader().beginMain();
+		
 		printVehicleList(manufacturerName, html);
+		printBackButtons(html);
+
 		html.closeMain();
-		html.beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück");
 		html.footer().closeHtml().out().flush();
 
 	}
 
+	private void printBackButtons(HtmlWriter html) {
+		html.beginFluid().beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück").closePart().closeFluid();
+	}
+
 	private void printVehicleList(String manufacturerName, HtmlWriter html) {
-		html.beginPart(manufacturerName);
-		html.beginTable();
+		
+		html.beginFluid().beginPart(manufacturerName).beginTable();
+		
+		html.beginHeadRow();
+		html.beginHead().print("#").closeHead();
+		html.beginHead().print("Name").closeHead();
+		html.beginHead().print("Date").closeHead();
+		html.closeHeadRow();
+		
+		
 		for (VehicleDto vehicle : controller.findVehicleByManufacturer(manufacturerName)) {
 			html.beginRow()
-				.beginCell()
-				.print(vehicle.getModelName())
-				.closeCell()
+				.beginCell().print(""+vehicle.getId()).closeCell()
+				.beginCell().print(""+vehicle.getModelName()).closeCell()
+				.beginCell().print(""+vehicle.getConstructionDate()).closeCell()
 				.closeRow();
 		}
-		html.closeTable();
-		html.closePart();
+		
+		html.closeTable().closePart().closeFluid();
 	}
 	
 	@Override

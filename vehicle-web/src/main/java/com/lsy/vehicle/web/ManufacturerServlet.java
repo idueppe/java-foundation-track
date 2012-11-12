@@ -34,20 +34,50 @@ public class ManufacturerServlet extends HttpServlet {
 
 		html.beginHtml().defaultHeader().beginMain();
 
-		html.beginPart("Manufacturer").beginTable();
-		for (ManufacturerDto manufacturer : controller.allManufactures()) {
-			html.beginRow().beginCell();
-			html.button("vehicles?manufacturer="+manufacturer.getName(), manufacturer.getName());
-			html.closeCell().closeRow();
-		}
-		html.closeTable().closePart();
-
+		printManufacturerTable(html);
+		printActionBar(html);
+		
 		html.closeMain();
+		html.footer().closeHtml().out().flush();
+	}
+
+	private void printActionBar(HtmlWriter html) {
+		html.beginFluid();
 		html.beginPart("")
 			.buttonInfo("/vehicle-web/AddManufacturer", "Add Manufacturer")
 			.print("&nbsp;")
 			.buttonInfo("/vehicle-web", "Zurück");
-		html.footer().closeHtml().out().flush();
+		html.closeFluid();
+	}
+
+	private void printManufacturerTable(HtmlWriter html) {
+		html.beginFluid();
+		html.beginPart("Manufacturer");
+		html.beginTable();
+		
+		printManufacturerHeaders(html);
+		printManufacturerRows(html);
+		
+		html.closeTable().closePart();
+		html.closeFluid();
+	}
+
+	private void printManufacturerHeaders(HtmlWriter html) {
+		html.beginHeadRow();
+		html.beginHead().print("#").closeHead();
+		html.beginHead().print("Name").closeHead();
+		html.beginHead().print("Action").closeHead();
+		html.closeHeadRow();
+	}
+
+	private void printManufacturerRows(HtmlWriter html) {
+		for (ManufacturerDto manufacturer : controller.allManufactures()) {
+			html.beginRow();
+			html.beginCell().print(""+manufacturer.getId()).closeCell();
+			html.beginCell().print(""+manufacturer.getName()).closeCell();
+			html.beginCell().buttonInfo("/vehicle-web/vehicles?manufacturer="+manufacturer.getName(),"Details").closeCell();
+			html.closeRow();
+		}
 	}
 
 	@Override
