@@ -14,8 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.lsy.vehicle.controller.VehicleController;
+import com.lsy.vehicle.controller.spi.DBFixture;
 import com.lsy.vehicle.dao.ApplicationLogDao;
-import com.lsy.vehicle.doa.jpa.DBFixture;
 import com.lsy.vehicle.dto.VehicleDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)

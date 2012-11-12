@@ -16,14 +16,13 @@ public class ManufacturerServiceBean implements ManufacturerService {
 
     @Autowired
     private ManufacturerDao manuDao;
-    
+     
     @Override
     public List<Manufacturer> findAll() {
         return manuDao.findAll();
     }
 
     @Override
-    @Transactional
     public void addManufacturer(String manufacturerName) throws ManufacturerAlreadyExistsException {
         if (isExisting(manufacturerName)) {
             throw new ManufacturerAlreadyExistsException(manufacturerName);
@@ -46,7 +45,5 @@ public class ManufacturerServiceBean implements ManufacturerService {
 	public void delete(Manufacturer manufacturer) {
 		manuDao.delete(manufacturer);
 	}
-	
-	
 
 }

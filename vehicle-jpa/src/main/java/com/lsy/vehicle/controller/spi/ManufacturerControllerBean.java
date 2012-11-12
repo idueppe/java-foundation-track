@@ -14,6 +14,7 @@ import com.lsy.vehicle.service.ManufacturerAlreadyExistsException;
 import com.lsy.vehicle.service.ManufacturerService;
 
 @Service
+@Transactional
 public class ManufacturerControllerBean implements ManufacturerController {
 	
     @Autowired
@@ -23,7 +24,6 @@ public class ManufacturerControllerBean implements ManufacturerController {
     private ManufacturerConverter manufacturerConverter;
 
     @Override
-    @Transactional
     public ManufacturerDto byName(String manufacturerName) {
         Manufacturer manufacturer = manufacturerService.byName(manufacturerName);
         return manufacturerConverter.convert(manufacturer);

@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lsy.vehicle.controller.spi.DBFixture;
 import com.lsy.vehicle.dao.ApplicationLogDao;
 import com.lsy.vehicle.domain.ApplicationLog;
 

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.lsy.vehicle.doa.jpa.DBFixture;
+import com.lsy.vehicle.controller.spi.DBFixture;
 import com.lsy.vehicle.service.ApplicationLogService;
 
 

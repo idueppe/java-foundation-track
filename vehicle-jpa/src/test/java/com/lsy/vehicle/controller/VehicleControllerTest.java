@@ -15,8 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.lsy.vehicle.controller.VehicleController;
+import com.lsy.vehicle.controller.spi.DBFixture;
 import com.lsy.vehicle.converter.VehicleConverter;
-import com.lsy.vehicle.doa.jpa.DBFixture;
 import com.lsy.vehicle.domain.EngineType;
 import com.lsy.vehicle.domain.Vehicle;
 import com.lsy.vehicle.dto.EngineDto;

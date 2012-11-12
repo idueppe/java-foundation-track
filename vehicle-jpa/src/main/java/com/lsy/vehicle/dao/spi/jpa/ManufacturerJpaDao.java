@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lsy.vehicle.dao.ManufacturerDao;
 import com.lsy.vehicle.domain.Manufacturer;
@@ -20,7 +21,7 @@ public class ManufacturerJpaDao implements ManufacturerDao {
     @Override
     public List<Manufacturer> findAll() {
         TypedQuery<Manufacturer> query = em.createQuery("SELECT m FROM Manufacturer m", Manufacturer.class);
-        return query.getResultList();
+        return query.getResultList(); 
     }
 
     @Override
@@ -29,6 +30,7 @@ public class ManufacturerJpaDao implements ManufacturerDao {
     }
 
     @Override
+    @Transactional
     public void create(Manufacturer manufacturer) {
         em.persist(manufacturer);
     }

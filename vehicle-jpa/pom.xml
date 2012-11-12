@@ -48,7 +48,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.0.0.GA</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
