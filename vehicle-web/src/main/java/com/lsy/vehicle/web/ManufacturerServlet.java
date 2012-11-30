@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -28,17 +29,32 @@ public class ManufacturerServlet extends HttpServlet {
 	
 	private ManufacturerController controller;
 	
+	private Integer servletCounter = 0;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		HtmlWriter html = new HtmlWriter(response.getWriter());
 
 		html.beginHtml().defaultHeader().beginMain();
-
+		
+		html.println("<hr>counter "+increaseCounter(request)+"</hr>");
+		html.println("<hr>servlet counter "+(++servletCounter)+"</hr>");
+		
 		printManufacturerTable(html);
 		printActionBar(html);
 		
 		html.closeMain();
 		html.footer().closeHtml().out().flush();
+	}
+
+	private Integer increaseCounter(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Integer counter = (Integer) session.getAttribute("counter");
+		if (counter == null) {
+			counter =Integer.valueOf(0);
+		}
+		session.setAttribute("counter", ++counter);
+		return counter;
 	}
 
 	private void printActionBar(HtmlWriter html) {
@@ -75,7 +91,7 @@ public class ManufacturerServlet extends HttpServlet {
 			html.beginRow();
 			html.beginCell().print(""+manufacturer.getId()).closeCell();
 			html.beginCell().print(""+manufacturer.getName()).closeCell();
-			html.beginCell().buttonInfo("/vehicle-web/vehicles?manufacturer="+manufacturer.getName(),"Details").closeCell();
+			html.beginCell().buttonInfo("vehicles?manufacturer="+manufacturer.getName(),"Details").closeCell();
 			html.closeRow();
 		}
 	}

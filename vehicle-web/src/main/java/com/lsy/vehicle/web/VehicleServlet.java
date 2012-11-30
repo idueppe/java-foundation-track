@@ -1,6 +1,7 @@
 package com.lsy.vehicle.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,7 +14,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.lsy.vehicle.controller.VehicleController;
-import com.lsy.vehicle.dto.ManufacturerDto;
 import com.lsy.vehicle.dto.VehicleDto;
 import com.lsy.vehicle.web.util.HtmlWriter;
 
@@ -30,23 +30,28 @@ public class VehicleServlet extends HttpServlet {
 	private VehicleController controller;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String manufacturerName = request.getParameter("manufacturer");
+		String manufacturer = request.getParameter("manufacturer");
 
 		response.setContentType("text/html");
-		HtmlWriter html = new HtmlWriter(response.getWriter());
+		PrintWriter out = response.getWriter();
+		HtmlWriter html = new HtmlWriter(out);
 		
 		html.beginHtml().defaultHeader().beginMain();
 		
-		printVehicleList(manufacturerName, html);
-		printBackButtons(html);
+		printVehicleList(manufacturer, html);
+		printArtionsButtons(html, manufacturer);
 
 		html.closeMain();
 		html.footer().closeHtml().out().flush();
 
 	}
 
-	private void printBackButtons(HtmlWriter html) {
-		html.beginFluid().beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück").closePart().closeFluid();
+	private void printArtionsButtons(HtmlWriter html, String manufacturer) {
+		html.beginFluid().beginPart("")
+			.buttonInfo("/vehicle-web/addvehicle?manufacturer="+manufacturer, "Neues Fahrzeug anlegen")
+			.print("&nbsp;")
+			.buttonInfo("/vehicle-web/manufacturers", "Zurück")
+			.closePart().closeFluid();
 	}
 
 	private void printVehicleList(String manufacturerName, HtmlWriter html) {
