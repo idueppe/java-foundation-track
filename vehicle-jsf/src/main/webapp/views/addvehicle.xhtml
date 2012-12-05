@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="main">
+        <h1>#{vehiclesManager.manufacturer.name}: Fahrzeuge</h1>
+        <div class="row-fluid">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <!-- TODO hier das Formular ergänzen -->
+                    <p>
+                        Formular is underconstruction.
+                    </p>
+                    <h:panelGrid columns="2">
+                        <h:commandLink action="#{vehiclesManager.addVehicle}" styleClass="btn btn-primary">Hinzufügen</h:commandLink>
+                        <h:commandLink action="#{vehiclesManager.cancelAdding}" styleClass="btn btn-danger" immediate="true">Abbrechen</h:commandLink>
+                    </h:panelGrid>
+                </h:panelGrid>
+
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
