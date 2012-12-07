@@ -39,7 +39,6 @@ public class DBFixture {
 
     private Engine currentEngine;
 
-    @PostConstruct
     public void createDefaultDataInDatabase() {
         this.createManufacturer(MANUFACTURER_BUGGATI)
             .addVehicle()
