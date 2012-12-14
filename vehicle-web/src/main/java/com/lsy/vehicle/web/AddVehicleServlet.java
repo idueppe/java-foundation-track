@@ -86,7 +86,8 @@ public class AddVehicleServlet extends HttpServlet {
 			engineDto.setEngineType(EngineType.DIESEL);
 			vehicle.setEngine(engineDto);
 			
-			Date constructionDate = new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("construction"));
+			String paramConstructionDate = request.getParameter("construction");
+			Date constructionDate = new SimpleDateFormat("dd.MM.yyyy").parse(paramConstructionDate);
 			vehicle.setConstructionDate(constructionDate);
 			
 			controller.saveOrUpdateVehicle(vehicle);
@@ -94,6 +95,7 @@ public class AddVehicleServlet extends HttpServlet {
 		} catch (ParseException e) {
 			html.print("<p class=\"text-error\"> "+e.getMessage()+"</p>");
 		}
+		
 		html.closePart().closeFluid();
 		html.beginFluid();
 		html.beginPart("").buttonInfo("/vehicle-web/manufacturers", "Zurück");
