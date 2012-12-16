@@ -46,4 +46,9 @@ public class ManufacturerControllerBean implements ManufacturerController {
     	manufacturerService.delete(manufacturer);
     }
 
+    @Override
+    public void updateManufacturerName(ManufacturerDto manufacturer) {
+        manufacturerService.updateName(manufacturer.getId(), manufacturer.getName());
+    }
+
 }

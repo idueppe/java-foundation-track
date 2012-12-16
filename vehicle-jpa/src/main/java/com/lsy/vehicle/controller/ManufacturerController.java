@@ -14,5 +14,7 @@ public interface ManufacturerController {
     public void addManufacturer(String manufacturerName) throws ManufacturerAlreadyExistsException;
     
     public void deleteManufacturer(String manufacturerName);
+
+    public void updateManufacturerName(ManufacturerDto selectedManufacturer);
     
 }

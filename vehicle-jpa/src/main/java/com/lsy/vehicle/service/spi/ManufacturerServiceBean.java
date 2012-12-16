@@ -45,4 +45,11 @@ public class ManufacturerServiceBean implements ManufacturerService {
 		manuDao.delete(manufacturer);
 	}
 
+    @Override
+    public void updateName(Long manufacturerId, String newManufacturerName) {
+        Manufacturer manufacturer = manuDao.find(manufacturerId);
+        manufacturer.setName(newManufacturerName);
+        manuDao.update(manufacturer); // optional
+    }
+
 }

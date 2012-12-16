@@ -2,6 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:rich="http://richfaces.org/rich"
                 template="/WEB-INF/templates/bootstrap.xhtml">
 
     <ui:define name="navigation">
@@ -20,10 +22,16 @@
         <div class="row-fluid">
             <h:form>
                 <h:panelGrid columns="1">
-                    <!-- TODO hier das Formular ergänzen -->
-                    <p>
-                        Formular is underconstruction.
-                    </p>
+					<h:outputLabel for="modelName" value="Modell:"/>
+					<h:inputText id="modelName" value="#{vehiclesManager.selectedVehicle.modelName}" required="true">
+						<f:validateLength minimum="2" maximum="10"/>
+					</h:inputText>
+					<h:message for="modelName" showDetails="true" errorClass="text-error"/>
+					
+					<h:outputLabel for="constructionDate" value="Herstellungsdatum"/>
+					<rich:calendar id="constructionDate" value="#{vehiclesManager.selectedVehicle.constructionDate}" datePattern="dd.MM.yyyy" locale="de_DE"/>
+					<h:message for="constructionDate" errorClass="text-error"/>
+					
                     <h:panelGrid columns="2">
                         <h:commandLink action="#{vehiclesManager.addVehicle}" styleClass="btn btn-primary">Hinzufügen</h:commandLink>
                         <h:commandLink action="#{vehiclesManager.cancelAdding}" styleClass="btn btn-danger" immediate="true">Abbrechen</h:commandLink>

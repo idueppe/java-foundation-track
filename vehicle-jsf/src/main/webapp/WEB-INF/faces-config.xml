@@ -7,12 +7,22 @@
       http://java.sun.com/xml/ns/javaee
       http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
 
-   <!-- Write your navigation rules here. You are encouraged to use CDI for creating @Named managed beans. -->
-
     <application>
         <el-resolver>
             org.springframework.web.jsf.el.SpringBeanFacesELResolver
         </el-resolver>
     </application>
+    
+    <navigation-rule>
+    	<from-view-id>/views/manufacturers.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-outcome>manufacturer_selected</from-outcome>
+    		<to-view-id>/views/vehicles.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-outcome>back_to_home</from-outcome>
+    		<to-view-id>/views/home.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
 
 </faces-config>

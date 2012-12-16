@@ -6,9 +6,9 @@
    <h:head>
       <title>Vehicle Fleet Management</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-       <h:outputStylesheet name="css/vehicle.css"/>
        <h:outputStylesheet name="css/bootstrap.css"/>
        <h:outputStylesheet name="css/bootstrap-responsive.css"/>
+       <h:outputStylesheet name="css/vehicle.css"/>
    </h:head>
    <h:body>
        <div class="container-narrow">
@@ -29,9 +29,13 @@
                <ui:insert name="footer">
                     <p>&copy; by Crowdcode</p>
                </ui:insert>
+		      <p>
+		      	Debugging: Ctrl+Shift+D<ui:debug hotkey="d" rendered="true"/>
+		      </p>
            </div>
        </div>
       <h:outputScript name="js/jquery.js"/>
       <h:outputScript name="js/bootstrap.js"/>
+      
    </h:body>
 </html>

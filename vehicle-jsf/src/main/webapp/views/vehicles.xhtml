@@ -18,7 +18,7 @@
 
     <ui:define name="main">
         <h1>#{vehiclesManager.manufacturer.name}: Fahrzeuge</h1>
-        <h:messages infoClass="info" errorClass="error" warnClass="warning" showSummary="true" showDetail="false" />
+        <h:messages infoClass="text-info" errorClass="text-error" warnClass="text-warning" showSummary="true" showDetail="false" />
         <h:form>
             <h:dataTable styleClass="table table-striped" value="#{vehiclesManager.vehicles}" var="vehicle">
                 <h:column >
@@ -38,7 +38,7 @@
                         Herstellungsdatum
                     </f:facet>
                     <h:outputText value="#{vehicle.constructionDate}">
-                        <f:convertDateTime dateStyle="short"/>
+                        <f:convertDateTime dateStyle="long"/>
                     </h:outputText>
                 </h:column>
                 <h:column>
@@ -49,7 +49,7 @@
                 </h:column>
             </h:dataTable>
             <hr/>
-            <h:commandLink action="/views/addvehicle" styleClass="btn btn-primary">Hinzufügen</h:commandLink>
+            <h:commandLink action="#{vehiclesManager.startAdding}" styleClass="btn btn-primary">Hinzufügen</h:commandLink>
         </h:form>
     </ui:define>
 </ui:composition>

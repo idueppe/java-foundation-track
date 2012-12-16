@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.lsy.vehicle.controller.VehicleController;
+import com.lsy.vehicle.domain.EngineType;
+import com.lsy.vehicle.dto.EngineDto;
 import com.lsy.vehicle.dto.ManufacturerDto;
 import com.lsy.vehicle.dto.VehicleDto;
 
@@ -26,7 +28,10 @@ public class VehiclesManager {
 
     @ManagedProperty("#{vehicleControllerBean}")
     private VehicleController vehicleController;
+    
     private ManufacturerDto manufacturer;
+    
+    private VehicleDto selectedVehicle;
     
     public List<VehicleDto> getVehicles() {
         if (manufacturer != null) {
@@ -38,7 +43,12 @@ public class VehiclesManager {
 
     public String showVehicles(ManufacturerDto manufacturer) {
         this.manufacturer = manufacturer;
-        return "/views/vehicles";
+        return "manufacturer_selected";
+    }
+    
+    public String startAdding() {
+        selectedVehicle = new VehicleDto();
+        return "/views/addvehicle";
     }
 
     public String delete(VehicleDto vehicleDto) {
@@ -49,9 +59,15 @@ public class VehiclesManager {
     }
 
     public String addVehicle() {
+        selectedVehicle.setManufacturerName(manufacturer.getName());
+        // TODO select on page
+        selectedVehicle.setEngine(new EngineDto());
+        selectedVehicle.getEngine().setEngineType(EngineType.PETROL);
+        vehicleController.saveOrUpdateVehicle(selectedVehicle);
+        
         FacesMessage msg = new FacesMessage();
-        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-        msg.setSummary("Diese Funktion ist noch nicht implementiert.");
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setSummary("Fahrzeug hinzugefügt.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return "/views/vehicles";
     }
@@ -71,5 +87,13 @@ public class VehiclesManager {
 
     public void setVehicleController(VehicleController vehicleController) {
         this.vehicleController = vehicleController;
+    }
+
+    public VehicleDto getSelectedVehicle() {
+        return selectedVehicle;
+    }
+
+    public void setSelectedVehicle(VehicleDto selectedVehicle) {
+        this.selectedVehicle = selectedVehicle;
     }
 }

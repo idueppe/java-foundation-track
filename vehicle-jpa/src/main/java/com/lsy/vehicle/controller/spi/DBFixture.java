@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -39,7 +38,6 @@ public class DBFixture {
 
     private Engine currentEngine;
 
-    @PostConstruct
     public void createDefaultDataInDatabase() {
         this.createManufacturer(MANUFACTURER_BUGGATI)
             .addVehicle()
