@@ -15,7 +15,7 @@ import com.lsy.vehicle.domain.Manufacturer;
 @Repository
 public class ManufacturerJpaDao implements ManufacturerDao {
     
-    @PersistenceContext(name="vehicle-foundation")
+    @PersistenceContext(unitName="vehicle-foundation")
     private EntityManager em;
     
     @Override

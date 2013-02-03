@@ -11,5 +11,7 @@ public interface VehicleController {
     public void saveOrUpdateVehicle(VehicleDto vehicle);
     
     public void deleteVehicle(VehicleDto vehicle);
+
+    public VehicleDto getVehicle(Long id);
     
 }

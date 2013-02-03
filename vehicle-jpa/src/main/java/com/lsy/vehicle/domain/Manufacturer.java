@@ -25,7 +25,7 @@ public class Manufacturer {
     // @Column(unique=true)
     private String name;
 
-    @OneToMany(mappedBy = "manufacturer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE })
+    @OneToMany( mappedBy = "manufacturer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE })
     private List<Vehicle> vehicles = new ArrayList<>();
     
     @OneToMany(mappedBy = "manufacturer", cascade = { CascadeType.ALL})

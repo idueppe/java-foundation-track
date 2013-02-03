@@ -15,7 +15,7 @@ import com.lsy.vehicle.domain.Vehicle;
 @Repository
 public class VehicleJpaDao implements VehicleDao {
     
-    @PersistenceContext(name="vehicle-foundation")
+    @PersistenceContext(unitName="vehicle-foundation")
     private EntityManager em;
     
     public VehicleJpaDao() {}

@@ -13,7 +13,7 @@ import com.lsy.vehicle.domain.ApplicationLog;
 @Repository
 public class ApplicationLogDao implements com.lsy.vehicle.dao.ApplicationLogDao {
 
-    @PersistenceContext(name="vehicle-foundation")
+    @PersistenceContext(unitName="vehicle-foundation")
     private EntityManager em;
 
     @Override

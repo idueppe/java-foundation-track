@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/fleet">Flotte</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="main">
+        <h:messages infoClass="info" errorClass="error" warnClass="warning" showSummary="true" showDetail="false" />
+    	<h:form>
+    		<h:outputLabel for="companyName" value="Firmenname"/>
+    		<h:inputText id="companyName" value="#{fleetManager.companyName}">
+    			<f:ajax event="change" execute="companyName"/>
+    		</h:inputText>
+    		
+    		<div class="row">
+    			<div class="span3">
+		    		<h:outputLabel for="selectManufacturer" value="Hersteller"/>
+    				<h:selectOneMenu id="selectManufacturer" value="#{fleetManager.selectedManufacturer}">
+    					<f:converter converterId="manufacturerDtoConverter"/>
+		    			<f:selectItem itemLabel="- bitte wählen -" itemValue="#{null}"/>
+    					<f:selectItems value="#{fleetManager.availableManufacturers}" var="m" itemLabel="#{m.name}"/>
+		    			<f:ajax event="change" execute="selectManufacturer" render="@form"/>
+    				</h:selectOneMenu>
+    			</div>
+    			<div class="span3">
+		    		<h:outputLabel for="selectVehicle" value="Fahrzeug" rendered="#{not empty fleetManager.selectedManufacturer}"/>
+		    		<h:selectOneMenu id="selectVehicle" value="#{fleetManager.selectedVehicle}" rendered="#{not empty fleetManager.selectedManufacturer}">
+    					<f:converter converterId="vehicleDtoConverter"/>
+		    			<f:selectItem itemLabel="- bitte wählen -" itemValue="#{null}"/>
+		    			<f:selectItems value="#{fleetManager.availableVehicles}" var="v" itemLabel="#{v.modelName}"/>
+		    			<f:ajax event="change" execute="selectVehicle" render="@form"/>
+		    		</h:selectOneMenu>
+    			</div>
+    			<div class="span3">
+    				<br/>
+			        <h:commandLink 
+			        	id="addVehicleButton" 
+			        	action="#{fleetManager.addVehicle}"
+			        	rendered="#{not empty fleetManager.selectedVehicle}" 
+			        	styleClass="btn-small btn-success">Hinzufügen</h:commandLink>
+    			</div>
+    		</div>
+	        <h4>Liste der selektierten Fahrzeugen:</h4>
+            <h:dataTable styleClass="table table-striped" value="#{fleetManager.fleet}" var="vehicle">
+                <h:column >
+                    <f:facet name="header">
+                        #
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Hersteller
+                    </f:facet>
+                    #{vehicle.manufacturerName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Fahrzeug
+                    </f:facet>
+                    #{vehicle.vehicleModel}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Erstzulassung
+                    </f:facet>
+                    <h:outputText value="#{vehicle.constructionDate}">
+                        <f:convertDateTime dateStyle="short" timeZone="GMT+1"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Kaufdatum
+                    </f:facet>
+                    <h:outputText value="#{vehicle.orderDate}">
+                        <f:convertDateTime  dateStyle="short" type="both" timeStyle="default" timeZone="GMT+1"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Action
+                    </f:facet>
+                    <h:commandLink styleClass="btn-small btn-danger" action="#{fleetManager.delete(vehicle)}">Löschen</h:commandLink>
+                </h:column>
+            </h:dataTable>
+            <hr/>
+            <h:commandLink styleClass="btn btn-success" action="#{fleetManager.order()}">bestellen</h:commandLink>
+        </h:form>
+    </ui:define>
+</ui:composition>

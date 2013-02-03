@@ -89,6 +89,8 @@ public class DBFixture {
     
     public DBFixture removeAll() {
         beginTx();
+//        em.createQuery("DELETE FROM Company").executeUpdate();
+        em.createQuery("DELETE FROM Fleet").executeUpdate();
         em.createQuery("DELETE FROM Vehicle").executeUpdate();
         em.createQuery("DELETE FROM Engine").executeUpdate();
         em.createQuery("DELETE FROM Manufacturer").executeUpdate();
