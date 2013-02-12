@@ -46,6 +46,7 @@ public class VehicleControllerBean implements VehicleController {
     }
 
     private void createNewVehicle(VehicleDto vehicleDto) {
+        // DTO -> DOMAIN
         Vehicle vehicle;
         vehicle = new Vehicle();
         vehicle.setConstructionDate(vehicleDto.getConstructionDate());
@@ -54,9 +55,11 @@ public class VehicleControllerBean implements VehicleController {
         Engine engine = new Engine();
         engine.setType(vehicleDto.getEngine().getEngineType());
         vehicle.setEngine(engine);
-        
+        String manufacturerName = vehicleDto.getManufacturerName();
+        // CALL SERVICE
         vehicleService.registerVehicle(vehicle);
-        vehicleService.addVehicleToManufacturer(vehicleDto.getManufacturerName(), vehicle);
+        vehicleService.addVehicleToManufacturer(manufacturerName, vehicle);
+        // DOMAIN -> DTO
     }
 
     private void updateExistingVehicle(VehicleDto vehicleDto) {

@@ -17,6 +17,6 @@ public interface VehicleService {
 	
 	public Vehicle registerVehicle(Vehicle vehicle);
 
-    public Vehicle addVehicleToManufacturer(String string, Vehicle vehicle);
+    public Vehicle addVehicleToManufacturer(String manufacturerName, Vehicle vehicle);
     
 }

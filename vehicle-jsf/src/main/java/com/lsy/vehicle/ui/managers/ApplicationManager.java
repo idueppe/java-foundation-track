@@ -1,4 +1,4 @@
-package managers;
+package com.lsy.vehicle.ui.managers;
 
 import com.lsy.vehicle.controller.spi.DBFixture;
 

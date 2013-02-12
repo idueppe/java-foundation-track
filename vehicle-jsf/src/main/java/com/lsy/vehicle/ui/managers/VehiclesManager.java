@@ -1,4 +1,4 @@
-package managers;
+package com.lsy.vehicle.ui.managers;
 
 import java.util.Collections;
 import java.util.List;
