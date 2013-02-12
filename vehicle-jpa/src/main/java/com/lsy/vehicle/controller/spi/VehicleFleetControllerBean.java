@@ -15,7 +15,7 @@ import com.lsy.vehicle.dto.FleetVehicleDto;
 import com.lsy.vehicle.service.FleetService;
 import com.lsy.vehicle.service.VehicleService;
 
-@Service
+@Service()
 @Transactional
 public class VehicleFleetControllerBean implements VehicleFleetController {
 	

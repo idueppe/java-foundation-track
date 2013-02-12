@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+                <li><h:commandLink action="/views/fleet">Flotte</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/companies">Firmen</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="main">
+        <h4>Firmenliste</h4>
+        <h:messages infoClass="info" errorClass="error" warnClass="warning" showSummary="true" showDetail="false" />
+   		<h:form>
+    		<div class="row">
+    			<div class="span3">
+		    		<h:outputLabel for="selectCompany" value="Hersteller"/>
+    				<h:selectOneMenu id="selectCompany" value="#{companyManager.selectedCompany}">
+		    			<f:selectItem itemLabel="- bitte wählen -" itemValue="#{null}"/>
+    					<f:selectItems value="#{companyManager.companies}"/>
+		    			<f:ajax event="change" execute="selectCompany" render="@form"/>
+    				</h:selectOneMenu>
+    			</div>
+    			<div class="span3">
+    				<br/>
+			        <h:commandLink 
+			        	id="addVehicleButton" 
+			        	action="#{fleetManager.addVehicleFor(companyManager.selectedCompany)}"
+			        	rendered="#{not empty companyManager.selectedCompany}" 
+			        	styleClass="btn-small btn-success">Neue Fahrzeuge hinzufügen</h:commandLink>
+    			</div>
+    		</div>
+	        <h4>Liste der gespeicherten Fahrzeuge</h4	>
+            <h:dataTable 
+            	styleClass="table table-striped" 
+            	value="#{companyManager.fleet}" 
+            	var="vehicle"
+            	rendered="#{not empty companyManager.selectedCompany}">
+                <h:column >
+                    <f:facet name="header">
+                        #{vehicle.vehicleId}
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Hersteller
+                    </f:facet>
+                    #{vehicle.manufacturerName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Fahrzeug
+                    </f:facet>
+                    #{vehicle.vehicleModel}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Erstzulassung
+                    </f:facet>
+                    <h:outputText value="#{vehicle.constructionDate}">
+                        <f:convertDateTime dateStyle="short" timeZone="GMT+1"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Kaufdatum
+                    </f:facet>
+                    <h:outputText value="#{vehicle.orderDate}">
+                        <f:convertDateTime  dateStyle="short" type="both" timeStyle="default" timeZone="GMT+1"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Action
+                    </f:facet>
+                    <h:commandLink styleClass="btn-small btn-danger" action="#{companyManager.deleteVehicle(vehicle)}">Löschen</h:commandLink>
+                </h:column>
+            </h:dataTable>
+            <hr/>
+        </h:form>
+    </ui:define>
+</ui:composition>

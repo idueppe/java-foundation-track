@@ -59,7 +59,8 @@ public class FleetJpaDao implements FleetDao {
 
     @Override
     public List<String> findAllCompanyNames() {
-        throw new UnsupportedOperationException("FleetDao.findAllCompanies is not implemented yet.");
+        TypedQuery<String> query = em.createNamedQuery(Fleet.FIND_ALL_COMPANY_NAMES, String.class);
+        return query.getResultList();
     }
 
 }
