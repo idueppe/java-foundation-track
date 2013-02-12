@@ -1,4 +1,4 @@
-package com.lsy.vehicle.ui.managers;
+package com.lsy.vehicle.fleet.ui.managers;
 
 import java.util.Collections;
 import java.util.Date;
@@ -14,10 +14,10 @@ import javax.faces.context.FacesContext;
 
 import com.lsy.vehicle.controller.ManufacturerController;
 import com.lsy.vehicle.controller.VehicleController;
-import com.lsy.vehicle.controller.VehicleFleetCart;
 import com.lsy.vehicle.dto.FleetVehicleDto;
 import com.lsy.vehicle.dto.ManufacturerDto;
 import com.lsy.vehicle.dto.VehicleDto;
+import com.lsy.vehicle.fleet.controller.VehicleFleetCart;
 
 @ManagedBean
 @SessionScoped

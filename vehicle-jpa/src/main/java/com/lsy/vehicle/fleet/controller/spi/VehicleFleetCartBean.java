@@ -1,4 +1,4 @@
-package com.lsy.vehicle.controller.spi;
+package com.lsy.vehicle.fleet.controller.spi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.lsy.vehicle.controller.VehicleFleetCart;
-import com.lsy.vehicle.controller.VehicleFleetController;
 import com.lsy.vehicle.dto.FleetVehicleDto;
+import com.lsy.vehicle.fleet.controller.VehicleFleetCart;
+import com.lsy.vehicle.fleet.controller.VehicleFleetController;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

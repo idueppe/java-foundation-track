@@ -1,4 +1,4 @@
-package com.lsy.vehicle.domain;
+package com.lsy.vehicle.fleet.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+
+import com.lsy.vehicle.domain.Vehicle;
 
 
 @Entity

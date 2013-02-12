@@ -1,4 +1,4 @@
-package com.lsy.vehicle.controller.spi;
+package com.lsy.vehicle.fleet.controller.spi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lsy.vehicle.controller.VehicleFleetController;
-import com.lsy.vehicle.converter.FleetVehicleDtoConverter;
-import com.lsy.vehicle.domain.Fleet;
 import com.lsy.vehicle.domain.Vehicle;
 import com.lsy.vehicle.dto.FleetVehicleDto;
-import com.lsy.vehicle.service.FleetService;
+import com.lsy.vehicle.fleet.controller.VehicleFleetController;
+import com.lsy.vehicle.fleet.converter.FleetVehicleDtoConverter;
+import com.lsy.vehicle.fleet.domain.Fleet;
+import com.lsy.vehicle.fleet.service.FleetService;
 import com.lsy.vehicle.service.VehicleService;
 
 @Service()

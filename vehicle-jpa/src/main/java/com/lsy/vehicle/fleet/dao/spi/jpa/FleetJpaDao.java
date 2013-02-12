@@ -1,4 +1,4 @@
-package com.lsy.vehicle.dao.spi.jpa;
+package com.lsy.vehicle.fleet.dao.spi.jpa;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import com.lsy.vehicle.dao.FleetDao;
-import com.lsy.vehicle.domain.Fleet;
+import com.lsy.vehicle.fleet.dao.FleetDao;
+import com.lsy.vehicle.fleet.domain.Fleet;
 
 
 @Repository

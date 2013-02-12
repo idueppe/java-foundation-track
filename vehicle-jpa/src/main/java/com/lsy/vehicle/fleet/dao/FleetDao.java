@@ -1,8 +1,9 @@
-package com.lsy.vehicle.dao;
+package com.lsy.vehicle.fleet.dao;
 
 import java.util.List;
 
-import com.lsy.vehicle.domain.Fleet;
+import com.lsy.vehicle.dao.EntityDao;
+import com.lsy.vehicle.fleet.domain.Fleet;
 
 public interface FleetDao extends EntityDao<Fleet> {
 	

@@ -1,4 +1,4 @@
-package com.lsy.vehicle.controller;
+package com.lsy.vehicle.fleet.controller;
 
 import java.util.List;
 

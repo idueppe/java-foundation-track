@@ -1,14 +1,14 @@
-package com.lsy.vehicle.service.spi;
+package com.lsy.vehicle.fleet.service.spi;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lsy.vehicle.dao.FleetDao;
-import com.lsy.vehicle.domain.Fleet;
 import com.lsy.vehicle.domain.Vehicle;
-import com.lsy.vehicle.service.FleetService;
+import com.lsy.vehicle.fleet.dao.FleetDao;
+import com.lsy.vehicle.fleet.domain.Fleet;
+import com.lsy.vehicle.fleet.service.FleetService;
 
 @Service
 public class FleetServiceBean implements FleetService {

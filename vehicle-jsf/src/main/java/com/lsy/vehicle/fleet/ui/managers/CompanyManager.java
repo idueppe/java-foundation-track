@@ -1,4 +1,4 @@
-package com.lsy.vehicle.ui.managers;
+package com.lsy.vehicle.fleet.ui.managers;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +9,8 @@ import javax.faces.bean.SessionScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.lsy.vehicle.controller.VehicleFleetController;
 import com.lsy.vehicle.dto.FleetVehicleDto;
+import com.lsy.vehicle.fleet.controller.VehicleFleetController;
 
 @ManagedBean
 @SessionScoped

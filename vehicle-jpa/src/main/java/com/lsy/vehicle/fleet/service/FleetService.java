@@ -1,9 +1,9 @@
-package com.lsy.vehicle.service;
-
-import com.lsy.vehicle.domain.Fleet;
-import com.lsy.vehicle.domain.Vehicle;
+package com.lsy.vehicle.fleet.service;
 
 import java.util.List;
+
+import com.lsy.vehicle.domain.Vehicle;
+import com.lsy.vehicle.fleet.domain.Fleet;
 
 public interface FleetService {
 

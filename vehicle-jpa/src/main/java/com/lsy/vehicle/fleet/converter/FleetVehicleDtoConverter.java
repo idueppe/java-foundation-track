@@ -1,7 +1,8 @@
-package com.lsy.vehicle.converter;
+package com.lsy.vehicle.fleet.converter;
 
 import org.springframework.stereotype.Service;
 
+import com.lsy.vehicle.converter.AbstractDefaultConverter;
 import com.lsy.vehicle.domain.Vehicle;
 import com.lsy.vehicle.dto.FleetVehicleDto;
 
