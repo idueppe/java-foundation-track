@@ -13,6 +13,7 @@ import com.lsy.vehicle.dao.VehicleDao;
 import com.lsy.vehicle.domain.EngineType;
 import com.lsy.vehicle.domain.Manufacturer;
 import com.lsy.vehicle.domain.Vehicle;
+import com.lsy.vehicle.service.VehicleObserver;
 import com.lsy.vehicle.service.VehicleService;
 
 @Service
@@ -23,6 +24,8 @@ public class VehicleServiceBean implements VehicleService {
     
     @Autowired
     private ManufacturerDao manufacturerDao;
+    
+    private List<VehicleObserver> observers;
 
     @Override
     public Vehicle getCheapestVehicle() {
