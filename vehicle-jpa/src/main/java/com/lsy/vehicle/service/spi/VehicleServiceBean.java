@@ -1,5 +1,6 @@
 package com.lsy.vehicle.service.spi;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class VehicleServiceBean implements VehicleService {
     @Autowired
     private ManufacturerDao manufacturerDao;
     
-    private List<VehicleObserver> observers;
+    private List<VehicleObserver> observers = new ArrayList<>();
 
     @Override
     public Vehicle getCheapestVehicle() {
@@ -77,8 +78,22 @@ public class VehicleServiceBean implements VehicleService {
     @Transactional(propagation=Propagation.REQUIRED)
     public void delete(Long vehicleId) {
         Vehicle vehicle = vehicleDao.find(vehicleId);
-        // throw application exception if not vehicle found.
-        vehicleDao.delete(vehicle);
+        if (vehicle != null) {
+            notifyObserversAboutDeletingVehicle(vehicle);
+            vehicleDao.delete(vehicle);
+        } 
     }
-
+    
+    private void notifyObserversAboutDeletingVehicle(Vehicle vehicle) {
+        for(VehicleObserver observer : observers) {
+            observer.onVehicleDelete(vehicle);
+        }
+    }
+    
+    public void registerObserver(VehicleObserver observer) {
+        if (observer !=  null) {
+            observers.add(observer);
+        }
+    }
+    
 }

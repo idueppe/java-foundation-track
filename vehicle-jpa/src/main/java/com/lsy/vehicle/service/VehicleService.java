@@ -21,4 +21,6 @@ public interface VehicleService {
 
     public void delete(Long vehicleId);
     
+    public void registerObserver(VehicleObserver observer);
+    
 }

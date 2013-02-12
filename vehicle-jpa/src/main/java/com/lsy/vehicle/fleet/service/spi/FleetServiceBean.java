@@ -25,7 +25,7 @@ public class FleetServiceBean implements FleetService, VehicleObserver {
 	
 	@PostConstruct
 	private void initialize() {
-	    // registration for vehicle observation
+//	    vehicleService.	
 	}
 
 	@Override

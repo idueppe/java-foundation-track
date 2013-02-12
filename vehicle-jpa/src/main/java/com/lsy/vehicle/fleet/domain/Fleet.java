@@ -7,9 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -39,7 +39,7 @@ public class Fleet {
 	@Column(unique=true)
 	private String companyName;
 	
-	@OneToMany()
+	@ManyToMany()
 	private List<Vehicle> vehicles;
 	
 	@Version
