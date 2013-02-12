@@ -70,4 +70,12 @@ public class VehicleServiceBean implements VehicleService {
         return vehicleDao.find(vehicleId);
     }
 
+    @Override
+    @Transactional(propagation=Propagation.REQUIRED)
+    public void delete(Long vehicleId) {
+        Vehicle vehicle = vehicleDao.find(vehicleId);
+        // throw application exception if not vehicle found.
+        vehicleDao.delete(vehicle);
+    }
+
 }

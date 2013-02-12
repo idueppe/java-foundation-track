@@ -70,6 +70,7 @@ public class VehicleControllerBean implements VehicleController {
 
     @Override
     public void deleteVehicle(VehicleDto vehicle) {
+        vehicleService.delete(vehicle.getId());
     }
 
     @Override
