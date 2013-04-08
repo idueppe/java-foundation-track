@@ -49,7 +49,7 @@ public class ManufacturerServiceTest {
     public void testFindAllManufacturer() {
         List<Manufacturer> manufacturers = manufacturerService.findAll();
         assertNotNull("Result list should never be null.", manufacturers);
-        assertEquals("There should be two manufacturers.", 2, manufacturers.size());
+        assertEquals("There should be two manufacturers.", 3, manufacturers.size());
     }
 
     @Test

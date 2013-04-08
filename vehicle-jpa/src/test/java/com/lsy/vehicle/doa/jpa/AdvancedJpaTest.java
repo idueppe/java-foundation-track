@@ -14,9 +14,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.lsy.vehicle.domain.Manufacturer;
+import com.lsy.vehicle.domain.Seat;
 import com.lsy.vehicle.domain.Vehicle;
 
-public class ManufacturerJpaTest {
+public class AdvancedJpaTest {
     
     private static EntityManagerFactory emf;
     
@@ -49,6 +50,15 @@ public class ManufacturerJpaTest {
             }
             em.close();
         }
+    }
+    
+    @Test
+    public void testAddVehicleWithSeats() {
+        txBegin();
+        Vehicle vehicle = new Vehicle();
+        vehicle.setSeat(new Seat());
+        em.persist(vehicle);
+        txCommit();
     }
     
     @Test

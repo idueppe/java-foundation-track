@@ -1,9 +1,11 @@
 package com.lsy.vehicle.doa.jpa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lsy.vehicle.controller.spi.DBFixture;
 import com.lsy.vehicle.dao.ManufacturerDao;
+import com.lsy.vehicle.domain.EngineType;
 import com.lsy.vehicle.domain.Manufacturer;
 import com.lsy.vehicle.domain.Vehicle;
 
@@ -39,6 +42,13 @@ public class ManufacturerJpaDaoTest {
     @After
     public void tearDown() {
         dbFixture.removeAll();
+    }
+    
+    @Test
+    public void testFindByEngineType() {
+        List<Manufacturer> result = dao.findManufacturerWithEngineTypes(EngineType.DIESEL, EngineType.PETROL);
+        System.out.println(Arrays.toString(result.toArray()));
+        assertFalse(result.isEmpty());
     }
     
     

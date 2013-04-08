@@ -49,7 +49,7 @@ public class VehicleJpaDaoTest {
     @Test
     public void testFindAllVehicles() {
         List<Vehicle> allVehicles = dao.findAll();
-        assertEquals("There should be 3 Vehicles in the database", 3, allVehicles.size());
+        assertEquals("There should be 3 Vehicles in the database", 4, allVehicles.size());
     }
     
     @Test

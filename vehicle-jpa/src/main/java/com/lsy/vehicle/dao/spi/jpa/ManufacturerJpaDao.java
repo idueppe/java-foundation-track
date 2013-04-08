@@ -1,5 +1,6 @@
 package com.lsy.vehicle.dao.spi.jpa;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lsy.vehicle.dao.ManufacturerDao;
+import com.lsy.vehicle.domain.EngineType;
 import com.lsy.vehicle.domain.Manufacturer;
 
 @Repository
@@ -47,7 +49,7 @@ public class ManufacturerJpaDao implements ManufacturerDao {
 
     @Override
     public Manufacturer findManufacturerByName(String name) {
-        TypedQuery<Manufacturer> query = em.createNamedQuery("findManufacturerByName", Manufacturer.class);
+        TypedQuery<Manufacturer> query = em.createNamedQuery(Manufacturer.FIND_BY_NAME, Manufacturer.class);
         query.setParameter("name", name);
         List<Manufacturer> manufacturers = query.getResultList();
         if (manufacturers.size() > 0) {
@@ -56,5 +58,35 @@ public class ManufacturerJpaDao implements ManufacturerDao {
             return null;
         }
     }
+
+    @Override
+    public List<Manufacturer> findManufacturerWithEngineTypes(EngineType... engineType) {
+        TypedQuery<Manufacturer> query = em.createNamedQuery(Manufacturer.FIND_BY_ENGINE_TYPE, Manufacturer.class);
+        query.setParameter("engineType", Arrays.asList(engineType));
+        return query.getResultList();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

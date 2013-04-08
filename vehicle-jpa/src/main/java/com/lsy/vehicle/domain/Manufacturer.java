@@ -4,43 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Version;
 
 @Entity
 @NamedQueries(value = {
-        @NamedQuery(name = "findManufacturerByName", query = "SELECT m FROM Manufacturer m WHERE m.name = :name"),
-})
-public class Manufacturer {
+        @NamedQuery(name = Manufacturer.FIND_BY_NAME, query = "SELECT m FROM Manufacturer m WHERE m.name = :name"),
+        @NamedQuery(name = Manufacturer.FIND_BY_ENGINE_TYPE, query = "SELECT m FROM Manufacturer AS m JOIN m.vehicles AS v WHERE v.engine.type IN (:engineType)") })
+public class Manufacturer extends AbstractEntity {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    public static final String FIND_BY_NAME = "Manufacturer.findByName";
+    public static final String FIND_BY_ENGINE_TYPE = "Manufacturer.findByENgineType";
 
-    // @Column(unique=true)
+    @Column(unique = true)
     private String name;
 
-    @OneToMany( mappedBy = "manufacturer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE })
+    @OneToMany(mappedBy = "manufacturer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.MERGE })
     private List<Vehicle> vehicles = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "manufacturer", cascade = { CascadeType.ALL})
+
+    @OneToMany(mappedBy = "manufacturer", cascade = { CascadeType.ALL })
     private List<Engine> ownedEngines = new ArrayList<>();
-
-    @Version
-    private long version;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -96,6 +83,11 @@ public class Manufacturer {
 
     public void setOwnedEngines(List<Engine> engines) {
         this.ownedEngines = engines;
+    }
+
+    @Override
+    public String toString() {
+        return "Manufacturer [name=" + name + "]";
     }
 
 }

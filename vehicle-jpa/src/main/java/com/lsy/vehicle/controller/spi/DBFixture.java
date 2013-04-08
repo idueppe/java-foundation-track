@@ -145,6 +145,7 @@ public class DBFixture {
         engines.add(currentEngine);
         currentEngine.setType(engineType);
         currentVehicle.setEngine(currentEngine);
+        currentEngine.setManufacturer(currentManufacturer);
         return this;
     }
 

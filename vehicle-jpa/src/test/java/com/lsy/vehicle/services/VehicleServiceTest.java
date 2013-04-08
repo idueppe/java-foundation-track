@@ -68,7 +68,7 @@ public class VehicleServiceTest {
     @Test
     public void testThatAllVehiclesAreFoundByEngineTypes() {
         List<Vehicle> vehicles = vehicleService.getVehiclesByEngineType(EngineType.DIESEL, EngineType.PETROL);
-        assertEquals("There should be two vehicles found.", 3, vehicles.size());
+        assertEquals("There should be two vehicles found.", 4, vehicles.size());
     }
     
     @Test

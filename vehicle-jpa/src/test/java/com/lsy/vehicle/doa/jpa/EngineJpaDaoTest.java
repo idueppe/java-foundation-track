@@ -48,7 +48,7 @@ public class EngineJpaDaoTest {
 	public void testFindAllEngines() {
 		List<Engine> all = dao.findAll();
 		assertNotNull("Results of EngineDao must not be null.", all);
-		assertEquals("The number of found engines is wrong.", 3, all.size());
+		assertEquals("The number of found engines is wrong.", 4, all.size());
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class EngineJpaDaoTest {
     	assertNotNull("Results of EngineDao must not be null.", owned);
     	assertEquals("The number of found engines is wrong.", 2, owned.size());
     }
-	
+
 	@Test
 	public void testFindById() {
 		Engine engine = dao.find(dbFixture.firstEngine().getId());
