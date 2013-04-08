@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="main">
+        <h1>Neuer Nutzer</h1>
+        <div class="row-fluid">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <p>
+                    	<h:outputLabel value="Username" for="username"/>
+                    	<h:inputText id="username" value="#{userManager.selectedUser.username}" />
+                    	<h:message for="username" showDetails="true" errorClass="text_error"/>
+
+                    	<h:outputLabel value="Email" for="email"/>
+                    	<h:inputText id="email" value="#{userManager.selectedUser.email}" />
+                    	<h:message for="email" showDetails="true" errorClass="text_error"/>
+                    	
+                    	<h:outputLabel value="Vorname" for="firstname"/>
+                    	<h:inputText id="firstname" value="#{userManager.selectedUser.firstname}" />
+                    	<h:message for="firstname" showDetails="true" errorClass="text_error"/>
+
+                    	<h:outputLabel value="Nachname" for="surename"/>
+                    	<h:inputText id="surename" value="#{userManager.selectedUser.surename}" />
+                    	<h:message for="surename" showDetails="true" errorClass="text_error"/>
+                    	
+                    	<h:outputLabel for="role" value="Rolle"/>
+    					<h:selectOneMenu id="role" value="#{userManager.selectedUser.role}">
+		    				<f:selectItem itemLabel="Kunde" itemValue="CUSTOMER"/>
+		    				<f:selectItem itemLabel="Agent" itemValue="AGENT"/>
+		    				<f:selectItem itemLabel="Administrator" itemValue="ADMIN"/>
+    					</h:selectOneMenu>
+                    	
+	                </p>
+                    <h:panelGrid columns="2">
+                        <h:commandLink action="#{userManager.addUser}" styleClass="btn btn-primary">Nutzer anlegen</h:commandLink>
+                        <h:commandLink action="#{userManager.cancelAdding}" styleClass="btn btn-danger" immediate="true">Abbrechen</h:commandLink>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

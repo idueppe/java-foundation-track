@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.lsy.vehicle.domain.Engine;
 import com.lsy.vehicle.domain.EngineType;
@@ -19,7 +19,7 @@ import com.lsy.vehicle.domain.Manufacturer;
 import com.lsy.vehicle.domain.Vehicle;
 import com.lsy.vehicle.fleet.domain.Fleet;
 
-@Service
+@Repository
 public class DBFixture {
 	
 	private static final Logger LOG = Logger.getLogger(DBFixture.class.getName());
@@ -27,7 +27,6 @@ public class DBFixture {
     public static final String MANUFACTURER_VW = "VW";
 
     public static final String MANUFACTURER_BUGGATI = "Buggati";
-
 
     @PersistenceUnit(unitName="vehicle-foundation")
     private EntityManagerFactory emf;
@@ -37,13 +36,13 @@ public class DBFixture {
     private List<Manufacturer> manufacturers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Engine> engines = new ArrayList<>();
-    private List<Fleet> fleets = new ArrayList<>();
+//    private List<Fleet> fleets = new ArrayList<>();
 
     private Manufacturer currentManufacturer;
 
     private Vehicle currentVehicle;
     private Engine currentEngine;
-    private Fleet currentFleet;
+//    private Fleet currentFleet;
 
     public void createDefaultDataInDatabase() {
     	LOG.info("Creating dummy data...");
@@ -68,8 +67,8 @@ public class DBFixture {
             .setModelName("A4")
             .addEngine(EngineType.DIESEL)
             .setConstructionDate(new Date())
-            .createFleet("crowdcode")
-            .addVehicleToFleet(0)
+//            .createFleet("crowdcode")
+//            .addVehicleToFleet(0)
             .persistAll();
     }
 
@@ -83,17 +82,17 @@ public class DBFixture {
         persistAll(manufacturers);
         persistAll(engines);
         persistAll(vehicles);
-        persistAll(fleets);
+//        persistAll(fleets);
         commitTx();
         return this;
     }
     
-    private void beginTx() {
+    protected void beginTx() {
         em = emf.createEntityManager();
         em.getTransaction().begin();
     }
     
-    private void commitTx() {
+    protected void commitTx() {
         em.getTransaction().commit();
         em.close();
     }
@@ -102,11 +101,11 @@ public class DBFixture {
         manufacturers.clear();
         vehicles.clear();
         engines.clear();
-        fleets.clear();
+//        fleets.clear();
         currentEngine = null;
         currentVehicle = null;
         currentManufacturer = null;
-        currentFleet = null;
+//        currentFleet = null;
         return null;
     }
     
@@ -129,7 +128,7 @@ public class DBFixture {
         return this;
     }
     
-    private void persistAll(List<?> entities) {
+    protected void persistAll(List<?> entities) {
         for (Object entity : entities) {
             System.out.println("--- persisting : "+entity);
             em.persist(entity);
@@ -177,17 +176,17 @@ public class DBFixture {
         return this;
     }
     
-    public DBFixture createFleet(String companyName) {
-        currentFleet = new Fleet();
-        currentFleet.setCompanyName(companyName);
-        fleets.add(currentFleet);
-        return this;
-    }
+//    public DBFixture createFleet(String companyName) {
+//        currentFleet = new Fleet();
+//        currentFleet.setCompanyName(companyName);
+//        fleets.add(currentFleet);
+//        return this;
+//    }
     
-    public DBFixture addVehicleToFleet(int vehicleIndex) {
-        currentFleet.getVehicles().add(vehicles.get(vehicleIndex));
-        return this;
-    }
+//    public DBFixture addVehicleToFleet(int vehicleIndex) {
+//        currentFleet.getVehicles().add(vehicles.get(vehicleIndex));
+//        return this;
+//    }
 
     public Manufacturer buildManufacturer(String manufacturerName) {
         Manufacturer manufacturer = new Manufacturer();
