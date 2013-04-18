@@ -13,27 +13,26 @@ import com.lsy.vehicle.security.dto.UserDto;
 
 @ManagedBean
 @SessionScoped
-public class GroupManager{
-    
-    @ManagedProperty(value="#{securityServiceControllerBean}")
+public class GroupManager {
+
+    @ManagedProperty(value = "#{securityServiceControllerBean}")
     private SecurityServiceController securityController;
 
-    @ManagedProperty(value="#{vehicleFleetControllerBean}")
+    @ManagedProperty(value = "#{vehicleFleetControllerBean}")
     private VehicleFleetController fleetController;
-    
+
     private String selectedCompany;
-    
+
     private FleetGroupDto selectedGroup;
-    
-    
+
     public List<String> getCompanies() {
         return fleetController.allCompanyNames();
     }
-    
+
     public List<UserDto> getAllCustomers() {
-        return securityController.findAllCustomer();
+        return securityController.findAllCustomersNotMemberOf(selectedCompany);
     }
-    
+
     public String getSelectedCompany() {
         return selectedCompany;
     }
@@ -54,9 +53,9 @@ public class GroupManager{
     public void setSelectedGroup(FleetGroupDto selectedGroup) {
         this.selectedGroup = selectedGroup;
     }
-    
+
     public String save() {
-        for (UserDto user: selectedGroup.getUsers()) {
+        for (UserDto user : selectedGroup.getUsers()) {
             securityController.addUserToGroup(selectedCompany, user.getUsername());
         }
         return "/views/secure/groups";
@@ -69,8 +68,5 @@ public class GroupManager{
     public void setFleetController(VehicleFleetController fleetController) {
         this.fleetController = fleetController;
     }
-    
-    
-    
-}
 
+}

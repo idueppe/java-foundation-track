@@ -1,9 +1,12 @@
 package com.lsy.vehicle.security.dao.spi.jpa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
@@ -83,5 +86,36 @@ public class UserDaoTest {
             assertEquals(Role.CUSTOMER, user.getRole());
         }
     }
+    
+    @Test
+    @Transactional
+    public void testFindNotMembers() {
+        User user = buildUser(Role.CUSTOMER);
+        dao.create(user);
+        
+        List<User> users = dao.findAllCustomersNotMemberOfCompany(DBFixtureUser.COMPANY_NAME);
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        
+        assertEquals(user, users.get(0));
+    }
+
+    @Test
+    public void testFindNotMembersForNotExistingCompany() {
+        List<User> users = dao.findAllCustomersNotMemberOfCompany("DOES-NOT-EXISTS-"+UUID.randomUUID());
+        assertNotNull(users);
+        assertTrue(users.isEmpty());
+    }
+    
+    private User buildUser(Role role) {
+        User user = new User();
+        user.setFirstname("J");
+        user.setSurename("Unit");
+        user.setUsername("junit");
+        user.setEmail("j@unit");
+        user.setRole(role);
+        return user;
+    }         
+       
     
 }

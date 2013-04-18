@@ -70,5 +70,15 @@ public class SecurityServiceBean implements SecurityService {
         groupDao.update(group);
     }
     
+    @Override
+    public List<User> findAllCustomerNotMemberOf(String companyName) {
+        return userDao.findAllCustomersNotMemberOfCompany(companyName);
+    }
+
+    @Override
+    public List<User> findByFilter(String username, String email, String firstname,
+                    String surename, Role role) {
+        return userDao.findByFilter(username, email, firstname, surename, role);
+    }      
 
 }

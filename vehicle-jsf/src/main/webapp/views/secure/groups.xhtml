@@ -44,7 +44,7 @@
 					<rich:pickList value="#{groupManager.selectedGroup.users}"
 						sourceCaption="Nutzer" targetCaption="Mitglieder"
 						listWidth="165px" listHeight="100px" orderable="false"
-						rendered="#{not empty groupManager.selectedGroup}">
+						rendered="#{not empty groupManager.selectedGroup}" >
 						<f:selectItems value="#{groupManager.allCustomers}" var="user"
 							itemValue="#{user}"
 							itemLabel="#{user.username}" />

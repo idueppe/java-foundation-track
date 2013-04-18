@@ -15,12 +15,18 @@ import javax.persistence.Version;
 @Table(name = "Account")
 @NamedQueries({@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.username = :username"),
         @NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u"),
-        @NamedQuery(name = User.FIND_BY_ROLES, query = "SELECT u FROM User u WHERE u.role = :role") })
+        @NamedQuery(name = User.FIND_BY_ROLES, query = "SELECT u FROM User u WHERE u.role = :role"),
+        @NamedQuery(
+                        name = User.FIND_NO_CUSTOMER_MEMBER_BY_COMPANY_NAME, 
+                        query="SELECT u FROM User u, FleetGroup g WHERE u.role = com.lsy.vehicle.security.domain.Role.CUSTOMER AND g.fleet.companyName = :companyName AND NOT u MEMBER OF g.users ")
+})
 public class User {
 
     public static final String FIND_BY_USERNAME = "User.findByUsername";
     public static final String FIND_ALL = "User.findByAll";
     public static final String FIND_BY_ROLES = "User.findByRole";
+    public static final String FIND_NO_CUSTOMER_MEMBER_BY_COMPANY_NAME = "User.findNoCumstomerMembersByCompanyName";
+
 
     @Id
     @GeneratedValue

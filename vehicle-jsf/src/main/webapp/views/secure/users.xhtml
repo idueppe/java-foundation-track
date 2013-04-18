@@ -20,30 +20,55 @@
         <h1>Nutzer</h1>
         <h:messages infoClass="info" errorClass="error" warnClass="warning" showSummary="true" showDetail="false" />
         <h:form>
-            <h:dataTable styleClass="table table-striped" value="#{userManager.allUsers}" var="user">
+            <h:dataTable id="usertable" styleClass="table table-striped" value="#{userManager.allUsers}" var="user">
                 <h:column >
                     <f:facet name="header">
-                        Username
+                        Username<br/>
+                        <h:inputText id="usernameFilter" value="#{userManager.filter.username}" >
+                        	<f:ajax event="change" execute="usernameFilter" render="usertable" />
+                        </h:inputText>                        
                     </f:facet>
                     #{user.username}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Email
+                        Email<br/>
+                        <h:inputText id="emailFilter" value="#{userManager.filter.email}" >
+                        	<f:ajax event="change" execute="emailFilter" render="usertable" />
+                        </h:inputText>                        
                     </f:facet>
                     #{user.email}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Rolle
+                        Rolle<br/>
+                         <h:selectOneMenu id="roleFilter" value="#{userManager.filter.role}">
+		    				<f:selectItem itemLabel="" itemValue="#{null}"/>
+		    				<f:selectItem itemLabel="Kunde" itemValue="CUSTOMER"/>
+		    				<f:selectItem itemLabel="Agent" itemValue="AGENT"/>
+		    				<f:selectItem itemLabel="Administrator" itemValue="ADMIN"/>
+                        	<f:ajax event="change" execute="roleFilter" render="usertable" />
+    					</h:selectOneMenu>
                     </f:facet>
                     #{user.role}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Name
+                        Vorname
+                        <h:inputText id="firstFilter" value="#{userManager.filter.firstname}" >
+                        	<f:ajax event="change" execute="firstFilter" render="usertable" />
+                        </h:inputText>                        
                     </f:facet>
-                    #{user.firstname} #{user.surename}
+                    #{user.firstname}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nachname
+                        <h:inputText id="sureFilter" value="#{userManager.filter.surename}" >
+                        	<f:ajax event="change" execute="sureFilter" render="usertable" />
+                        </h:inputText>                        
+                    </f:facet>
+                    #{user.surename}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
