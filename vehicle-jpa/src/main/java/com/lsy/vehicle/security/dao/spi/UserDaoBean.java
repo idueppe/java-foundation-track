@@ -1,5 +1,6 @@
 package com.lsy.vehicle.security.dao.spi;
 
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
@@ -20,6 +22,10 @@ import org.springframework.stereotype.Repository;
 import com.lsy.vehicle.security.dao.UserDao;
 import com.lsy.vehicle.security.domain.Role;
 import com.lsy.vehicle.security.domain.User;
+import com.lsy.vehicle.security.filter.SortOrder;
+import com.lsy.vehicle.security.filter.UserColumn;
+import com.lsy.vehicle.security.filter.UserFilterParameters;
+import com.lsy.vehicle.security.filter.UserFilterParameters.ColumnEntry;
 
 @Repository
 public class UserDaoBean implements UserDao {
@@ -66,26 +72,30 @@ public class UserDaoBean implements UserDao {
         return query.getResultList();
     }
 
+    
+    
     @Override
     public List<User> findAllCustomersNotMemberOfCompany(String companyName) {
         TypedQuery<User> query = em.createNamedQuery(User.FIND_NO_CUSTOMER_MEMBER_BY_COMPANY_NAME, User.class);
         query.setParameter("companyName", companyName);
         return query.getResultList();
     }
-
+    
+    
     @Override
     public List<User> findByFilter(String username, String email, String firstname,
                     String surename, Role role) {
         
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
         Metamodel metaModel = em.getMetamodel();
-        
         EntityType<User> user_ = metaModel.entity(User.class);
+        
+        // SELECT u FROM User u
+        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
         Root<User> user = criteriaQuery.from(user_);
         
+        // .. WHERE (filter = ?) ...
         List<Predicate> predicates = buildPredicates(username, email, firstname, surename, role, builder, user);
-        
         
         Predicate conjunction = conjunction(builder, predicates);
         if (conjunction != null) {
@@ -93,7 +103,8 @@ public class UserDaoBean implements UserDao {
         }
         
         TypedQuery<User> query = em.createQuery(criteriaQuery);
-        
+        if (StringUtils.isNotBlank(firstname))
+            query.setParameter("firstname", firstname);
         return query.getResultList();
     }
 
@@ -110,7 +121,9 @@ public class UserDaoBean implements UserDao {
         }
         if (StringUtils.isNotBlank(firstname)) {
             Expression<String> expression = user.get("firstname");
-            predicates.add(builder.like(expression, firstname));
+            Expression<String> parameter = builder.parameter(String.class,"firstname");
+            predicates.add(builder.like(expression, parameter));
+//            predicates.add(builder.like(expression, firstname));
         }
         if (StringUtils.isNotBlank(surename)) {
             Expression<String> expression = user.get("surename");
@@ -122,7 +135,53 @@ public class UserDaoBean implements UserDao {
         }
         return predicates;
     }
+    @Override
+    public List<User> findByFilter(UserFilterParameters userFilter) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        Metamodel metaModel = em.getMetamodel();
+        EntityType<User> user_ = metaModel.entity(User.class);
+        
+        // SELECT u FROM User u
+        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+        Root<User> user = criteriaQuery.from(user_);
+        
+        // ... WHERE (filter = ?) ...
+        List<Predicate> predicates = buildPredicates(userFilter, builder, user);
+        Predicate junction = junction(userFilter, builder, predicates);
+        if (junction != null) {
+            criteriaQuery.where(junction);
+        }
 
+        // ... ORDER BY ...
+        List<Order> orders = buildOrderBy(userFilter, builder, user);
+        if (!orders.isEmpty()) {
+            criteriaQuery.orderBy(orders);
+        }
+        
+        TypedQuery<User> query = em.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    private List<Order> buildOrderBy(UserFilterParameters userFilter, CriteriaBuilder builder, Root<User> user) {
+        List<Order> orders = new LinkedList<>();
+        for (ColumnEntry entry : userFilter.getSortedColumns()) {
+            if (entry.getSortOrder() == SortOrder.ASCENDING) {
+                orders.add(builder.asc(user.get(entry.getColumn().columnName())));
+            } else {
+                orders.add(builder.desc(user.get(entry.getColumn().columnName())));
+            }
+        }
+        return orders;
+    }
+
+    private Predicate junction(UserFilterParameters userFilter, CriteriaBuilder builder, List<Predicate> predicates) {
+        if (userFilter.isDisjunction()) {
+            return disjunction(builder, predicates);
+        } else {
+            return conjunction(builder, predicates);
+        }
+    }
+    
     private Predicate conjunction(CriteriaBuilder builder, List<Predicate> predicates) {
         Predicate current = null;
         for (Predicate item: predicates) {
@@ -134,6 +193,34 @@ public class UserDaoBean implements UserDao {
         }
         return current;
     }
-
     
+    private Predicate disjunction(CriteriaBuilder builder, List<Predicate> predicates) {
+        Predicate current = null;
+        for (Predicate item: predicates) {
+            if (current == null) {
+                current = item;
+            } else {
+                current = builder.or(current, item);
+            }
+        }
+        return current;
+    }
+    
+
+    private List<Predicate> buildPredicates(UserFilterParameters userFilter, CriteriaBuilder builder, Root<User> user) {
+        List<Predicate> predicates = new LinkedList<>();
+        for (UserColumn column : EnumSet.allOf(UserColumn.class)) {
+            ColumnEntry entry = userFilter.getColumn(column);
+            if (StringUtils.isNotBlank(entry.getFilter())) {
+                // ATTENTION: Convention enum names and column names are equal 
+                Expression<String> expression = user.get(column.toString().toLowerCase());
+                if (column == UserColumn.ROLE) {
+                    predicates.add(builder.equal(expression, Role.valueOf(entry.getFilter())));
+                } else {
+                    predicates.add(builder.like(expression, entry.wildcharFilter()));
+                }
+            }
+        }
+        return predicates;
+    }
 }

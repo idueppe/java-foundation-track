@@ -18,7 +18,10 @@ import javax.persistence.Version;
         @NamedQuery(name = User.FIND_BY_ROLES, query = "SELECT u FROM User u WHERE u.role = :role"),
         @NamedQuery(
                         name = User.FIND_NO_CUSTOMER_MEMBER_BY_COMPANY_NAME, 
-                        query="SELECT u FROM User u, FleetGroup g WHERE u.role = com.lsy.vehicle.security.domain.Role.CUSTOMER AND g.fleet.companyName = :companyName AND NOT u MEMBER OF g.users ")
+                        query="SELECT u FROM User u, FleetGroup g " +
+                        	"WHERE u.role = com.lsy.vehicle.security.domain.Role.CUSTOMER " +
+                        	"AND g.fleet.companyName = :companyName " +
+                        	"AND NOT u MEMBER OF g.users ")
 })
 public class User {
 
@@ -47,7 +50,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    
     public void setId(Long id) {
         this.id = id;
     }

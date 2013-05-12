@@ -10,8 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import com.lsy.vehicle.domain.Vehicle;
@@ -19,18 +18,26 @@ import com.lsy.vehicle.domain.Vehicle;
 
 @Entity
 @NamedQueries(
-	value = {
+	{
 	     @NamedQuery(name=Fleet.FIND_BY_COMPANY_NAME, query="SELECT f FROM Fleet f WHERE f.companyName = :companyName"),
 	     @NamedQuery(name=Fleet.FIND_ALL, query="SELECT f FROM Fleet f"),
-	     @NamedQuery(name=Fleet.FIND_ALL_COMPANY_NAMES, query="SELECT DISTINCT f.companyName FROM Fleet f")
+	     @NamedQuery(name=Fleet.FIND_ALL_COMPANY_NAMES, query="SELECT f.companyName FROM Fleet f"),
+	     @NamedQuery(name=Fleet.ENGINE_REPORT, query=
+	            " SELECT "+
+	     		" new com.lsy.vehicle.fleet.domain.EngineInfo(v.engine.type, COUNT(v)) " +
+	     		" FROM Fleet f INNER JOIN f.vehicles AS v" +
+	     		" WHERE f.companyName = :companyName" +
+	     		" GROUP BY v.engine.type" 
+	     		)
+	     
 	}
 )
-@Table(uniqueConstraints=@UniqueConstraint(name="companyNameUniqueConstraint", columnNames="companyName") )
 public class Fleet {
     
     public static final String FIND_BY_COMPANY_NAME = "Fleet.findByCompanyName";
     public static final String FIND_ALL = "Fleet.findAll";
     public static final String FIND_ALL_COMPANY_NAMES = "Fleet.findAllCompanyNames";
+    public static final String ENGINE_REPORT = "Fleet.EngineReport";
 	
 	@Id
 	@GeneratedValue
@@ -38,6 +45,10 @@ public class Fleet {
 	
 	@Column(unique=true)
 	private String companyName;
+	
+	@Transient
+	private int nameLength;
+
 	
 	@ManyToMany()
 	private List<Vehicle> vehicles;
@@ -71,6 +82,10 @@ public class Fleet {
 	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
+
+    public void delete(Vehicle vehicle) {
+        getVehicles().remove(vehicle);
+    }
 
 
 }

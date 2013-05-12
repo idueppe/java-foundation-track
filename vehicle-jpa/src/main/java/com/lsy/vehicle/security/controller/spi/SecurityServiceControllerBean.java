@@ -15,6 +15,7 @@ import com.lsy.vehicle.security.domain.Role;
 import com.lsy.vehicle.security.domain.User;
 import com.lsy.vehicle.security.dto.FleetGroupDto;
 import com.lsy.vehicle.security.dto.UserDto;
+import com.lsy.vehicle.security.filter.UserFilterParameters;
 import com.lsy.vehicle.security.service.SecurityService;
 
 @Service
@@ -75,6 +76,10 @@ public class SecurityServiceControllerBean implements SecurityServiceController 
             role = Role.valueOf(roleName);
         }
         return userConverter.convert(securityService.findByFilter(username, email, firstname, surename, role));
-    }    
-    
+    }
+
+    @Override
+    public List<UserDto> findByFilter(UserFilterParameters filter) {
+        return userConverter.convert(securityService.findByFilter(filter));
+    }
 }

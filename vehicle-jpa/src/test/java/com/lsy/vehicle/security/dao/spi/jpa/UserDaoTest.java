@@ -93,7 +93,11 @@ public class UserDaoTest {
         User user = buildUser(Role.CUSTOMER);
         dao.create(user);
         
+        System.out.println("-----------------------------------------------------------------");
+        
         List<User> users = dao.findAllCustomersNotMemberOfCompany(DBFixtureUser.COMPANY_NAME);
+        System.out.println("-----------------------------------------------------------------");
+
         assertNotNull(users);
         assertFalse(users.isEmpty());
         

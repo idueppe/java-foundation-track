@@ -13,6 +13,7 @@ import com.lsy.vehicle.security.dao.UserDao;
 import com.lsy.vehicle.security.domain.FleetGroup;
 import com.lsy.vehicle.security.domain.Role;
 import com.lsy.vehicle.security.domain.User;
+import com.lsy.vehicle.security.filter.UserFilterParameters;
 import com.lsy.vehicle.security.service.SecurityService;
 
 @Service
@@ -79,6 +80,12 @@ public class SecurityServiceBean implements SecurityService {
     public List<User> findByFilter(String username, String email, String firstname,
                     String surename, Role role) {
         return userDao.findByFilter(username, email, firstname, surename, role);
-    }      
+    }
+    
+    @Override
+    public List<User> findByFilter(UserFilterParameters filter) {
+        return userDao.findByFilter(filter);
+    }
+    
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lsy.vehicle.security.domain.Role;
 import com.lsy.vehicle.security.domain.User;
+import com.lsy.vehicle.security.filter.UserFilterParameters;
 
 public interface UserDao {
     
@@ -24,5 +25,7 @@ public interface UserDao {
     public List<User> findAllCustomersNotMemberOfCompany(String companyName);
     
     public List<User> findByFilter(String username, String email, String firstName, String surename, Role role);
+    
+    public List<User> findByFilter(UserFilterParameters userFilter);
 
 }
