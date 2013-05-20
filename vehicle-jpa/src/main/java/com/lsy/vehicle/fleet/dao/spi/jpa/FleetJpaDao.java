@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -68,8 +69,8 @@ public class FleetJpaDao implements FleetDao {
     public List<EngineInfo> getEngineReport(String companyName) {
         TypedQuery<EngineInfo> query = em.createNamedQuery(Fleet.ENGINE_REPORT, EngineInfo.class);
         query.setParameter("companyName", companyName);
-        
         return query.getResultList();
+        
     }
     
 }

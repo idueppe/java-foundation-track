@@ -66,7 +66,7 @@ public class DBFixtureUser {
         groups.clear();
         return this;
     }
-    
+
     public DBFixtureUser removeAll() {
         beginTx();
         List<FleetGroup> groups = em.createQuery("SELECT g FROM FleetGroup g", FleetGroup.class).getResultList();
@@ -75,8 +75,6 @@ public class DBFixtureUser {
             group.setFleet(null);
             em.flush();
         }
-        
-        
         em.createQuery("DELETE FROM FleetGroup").executeUpdate();
         em.createQuery("DELETE FROM User").executeUpdate();
         clear();

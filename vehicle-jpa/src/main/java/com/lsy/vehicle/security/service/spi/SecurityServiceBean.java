@@ -86,6 +86,12 @@ public class SecurityServiceBean implements SecurityService {
     public List<User> findByFilter(UserFilterParameters filter) {
         return userDao.findByFilter(filter);
     }
+
+    public void setUserDao(UserDao dao) {
+        userDao = dao;
+    }
+    
+    
     
 
 }

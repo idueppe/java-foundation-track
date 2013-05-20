@@ -17,7 +17,7 @@ public class UserFilterManager{
     @ManagedProperty("#{securityServiceControllerBean}")
     private SecurityServiceController securityController;
     
-    private UserDto selectedUser;
+    private UserDto selectedUser = new UserDto();
     
     private UserFilterParameters filter = new UserFilterParameters();
     

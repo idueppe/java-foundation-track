@@ -3,6 +3,7 @@ package com.lsy.vehicle.fleet.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class Fleet {
 	private int nameLength;
 
 	
-	@ManyToMany()
+	@ManyToMany(cascade={CascadeType.MERGE})
 	private List<Vehicle> vehicles;
 	
 	@Version

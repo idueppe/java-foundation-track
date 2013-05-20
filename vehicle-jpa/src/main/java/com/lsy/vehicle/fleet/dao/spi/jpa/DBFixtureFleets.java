@@ -69,6 +69,7 @@ public class DBFixtureFleets {
     
     public DBFixtureFleets unlinkFleets() {
         for (Fleet fleet: fleets) {
+            em.merge(fleet);
             fleet.getVehicles().clear();
         }
         return this;
@@ -76,11 +77,12 @@ public class DBFixtureFleets {
 
     public DBFixtureFleets removeAll() {
         beginTx();
-        unlinkFleets();
-        em.createQuery("DELETE FROM Fleet").executeUpdate();
-        fleets.clear();
-        clear();
+        TypedQuery<Fleet> query = em.createQuery("SELECT f FROM Fleet f", Fleet.class);
+        for (Fleet fleet : query.getResultList()) {
+            em.remove(fleet);
+        }
         commitTx();
+        clear();
         return this;
     }
     
