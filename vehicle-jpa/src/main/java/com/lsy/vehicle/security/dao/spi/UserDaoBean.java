@@ -159,7 +159,7 @@ public class UserDaoBean implements UserDao {
         }
         
         TypedQuery<User> query = em.createQuery(criteriaQuery);
-        query.setFirstResult(50);
+        query.setFirstResult(0);
         query.setMaxResults(50);
         return query.getResultList();
     }
