@@ -9,8 +9,17 @@ public interface FleetService {
 
 	void addVehicles(String companyName, List<Vehicle> vehicleList);
 
+	/**
+	 * 
+	 * @param companyName
+	 * @return Fleet instance of Fleet or NULL if company not exist.
+	 */
 	Fleet findFleetByName(String companyName);
 
+	/**
+	 * Never null.
+	 * @return List<String> list of company names
+	 */
     List<String> allCompanyNames();
 
 }

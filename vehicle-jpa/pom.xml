@@ -30,6 +30,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.lsy.foundation.vehicle</groupId>
+			<artifactId>vehicle-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>

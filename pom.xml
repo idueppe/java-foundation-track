@@ -10,9 +10,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>vehicle-jpa</module>
-        <module>vehicle-web</module>
         <module>vehicle-jsf</module>
+        <module>vehicle-web</module>
+        <module>vehicle-jpa</module>
+    		<module>vehicle-api</module>
     </modules>
 
 </project>

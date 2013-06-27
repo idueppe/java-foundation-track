@@ -1,6 +1,8 @@
 package com.lsy.vehicle.fleet.controller.spi;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,18 @@ public class VehicleFleetControllerBean implements VehicleFleetController {
 	@Override
 	public List<FleetVehicleDto> getVehicleFleetByName(String companyName) {
 		Fleet fleet = fleetService.findFleetByName(companyName);
-	    return fleetVehicleDtoConverter.convert(fleet.getVehicles());
+		if (fleet != null)
+		{
+		    return fleetVehicleDtoConverter.convert(fleet.getVehicles());
+		} else {
+		    return new LinkedList<>(); 
+		}
 	}
 
+	
+	
+	
+	
 	@Override
 	public void addVehicles(String companyName, List<FleetVehicleDto> vehicleList) {
 
