@@ -1,7 +1,6 @@
 package com.lsy.vehicle.fleet.controller.spi;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,10 +40,6 @@ public class VehicleFleetControllerBean implements VehicleFleetController {
 		}
 	}
 
-	
-	
-	
-	
 	@Override
 	public void addVehicles(String companyName, List<FleetVehicleDto> vehicleList) {
 
