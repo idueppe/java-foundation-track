@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/WEB-INF/templates/bootstrap.xhtml">
+
+	<ui:define name="navigation">
+		<h:form>
+			<ul class="nav nav-pills pull-right">
+				<li><h:commandLink action="/views/home">Start</h:commandLink></li>
+				<li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+				<li><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+				<li><h:commandLink action="/views/fleet">Flotte</h:commandLink></li>
+				<li><h:commandLink action="/views/companies">Firmen</h:commandLink></li>
+				<li><h:commandLink action="/views/secure/users">Nutzer</h:commandLink></li>
+				<li class="active"><h:commandLink action="/views/secure/groups">Gruppen</h:commandLink></li>
+			</ul>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="main">
+		<h:messages infoClass="info" errorClass="error" warnClass="warning"
+			showSummary="true" showDetail="false" />
+		<h4>Firmenliste</h4>
+		<h:form>
+			<div class="row">
+				<div class="span3">
+					<h:outputLabel for="selectCompany" value="Hersteller" />
+					<h:selectOneMenu id="selectCompany"
+						value="#{groupManager.selectedCompany}">
+						<f:selectItem itemLabel="- bitte wählen -" itemValue="#{null}" />
+						<f:selectItems value="#{groupManager.companies}" />
+						<f:ajax event="change" execute="selectCompany" render="@form" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<h4>
+				<h:outputText value="Nutzer von #{groupManager.selectedCompany}" rendered="#{not empty groupManager.selectedGroup}"/>
+			</h4>
+			<div class="row">
+				<div class="span3">
+					<rich:pickList value="#{groupManager.selectedGroup.users}"
+						sourceCaption="Nutzer" targetCaption="Mitglieder"
+						listWidth="165px" listHeight="100px" orderable="false"
+						rendered="#{not empty groupManager.selectedGroup}" >
+						<f:selectItems value="#{groupManager.allCustomers}" var="user"
+							itemValue="#{user}"
+							itemLabel="#{user.username}" />
+						<f:converter converterId="userDtoConverter" />
+					</rich:pickList>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span3">
+					<h:commandLink action="#{groupManager.save()}"
+						styleClass="btn btn-primary" rendered="#{not empty groupManager.selectedGroup}">Speichern</h:commandLink>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

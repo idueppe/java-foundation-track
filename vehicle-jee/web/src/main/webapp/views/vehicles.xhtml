@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="main">
+        <h1>#{vehiclesManager.manufacturer.name}: Fahrzeuge</h1>
+        <h:messages infoClass="text-info" errorClass="text-error" warnClass="text-warning" showSummary="true" showDetail="false" />
+        <h:form>
+            <h:dataTable styleClass="table table-striped" value="#{vehiclesManager.vehicles}" var="vehicle">
+                <h:column >
+                    <f:facet name="header">
+                        #
+                    </f:facet>
+                    #{vehicle.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Modelname
+                    </f:facet>
+                    #{vehicle.modelName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Herstellungsdatum
+                    </f:facet>
+                    <h:outputText value="#{vehicle.constructionDate}">
+                        <f:convertDateTime dateStyle="long"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Action
+                    </f:facet>
+                    <h:commandLink styleClass="btn-small btn-danger" action="#{vehiclesManager.delete(vehicle)}">Löschen</h:commandLink>
+                </h:column>
+            </h:dataTable>
+            <hr/>
+            <h:commandLink action="#{vehiclesManager.startAdding}" styleClass="btn btn-primary">Hinzufügen</h:commandLink>
+        </h:form>
+    </ui:define>
+</ui:composition>

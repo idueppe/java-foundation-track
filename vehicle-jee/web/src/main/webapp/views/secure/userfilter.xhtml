@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/bootstrap.xhtml">
+
+    <ui:define name="navigation">
+        <h:form>
+            <ul class="nav nav-pills pull-right">
+                <li><h:commandLink action="/views/home">Start</h:commandLink></li>
+                <li><h:commandLink action="/views/manufacturers">Hersteller</h:commandLink></li>
+                <li><h:commandLink action="/views/vehicles">Fahrzeuge</h:commandLink></li>
+                <li class="active"><h:commandLink action="/views/secure/users">Nutzer</h:commandLink></li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="main">
+        <h1>Nutzer</h1>
+        <h:messages infoClass="info" errorClass="error" warnClass="warning" showSummary="true" showDetail="false" />
+        <h:form>
+        	<h:commandLink
+        		action="#{userFilterManager.filter.toggleJunction()}" styleClass="btn btn-small btn-info">
+        		<h:outputText value="Filter UND verknüpft" rendered="#{userFilterManager.filter.conjunction}"/>
+        		<h:outputText value="Filter OR verknüpft" rendered="#{userFilterManager.filter.disjunction}"/>
+        	</h:commandLink>
+        	<span> </span>
+        	<h:commandLink
+        		action="#{userFilterManager.resetFilter()}" styleClass="btn btn-small btn-warning" value="Lösche Filter">
+        	</h:commandLink>
+        
+            <h:dataTable id="usertable" styleClass="table table-striped" value="#{userFilterManager.allUsers}" var="user">
+                <h:column >
+                    <f:facet name="header">
+                    	<h:commandLink 
+                    		action="#{userFilterManager.filter.columns['USERNAME'].toggleOrder()}" 
+                    		value="Username" 
+                    		styleClass="btn btn-small btn-block">
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['USERNAME'].sortOrder == 'ASCENDING'}">
+                    			<i class="icon-arrow-up"> </i>
+                    		</f:verbatim>
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['USERNAME'].sortOrder == 'DESCENDING'}">
+                    			<i class="icon-arrow-down"> </i>
+                    		</f:verbatim>
+                    		<h:outputText value="#{userFilterManager.filter.columns['USERNAME'].sortPosition + 1}"
+                    			rendered="#{userFilterManager.filter.columns['USERNAME'].sortPosition gt -1}"
+                    			styleClass="label"/>
+                    	</h:commandLink>
+                        <h:inputText id="usernameFilter" value="#{userFilterManager.filter.columns['USERNAME'].filter}" >
+                        	<f:ajax event="change" execute="usernameFilter" render="@form" />
+                        </h:inputText>                        
+                    </f:facet>
+                    #{user.username}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                         <h:commandLink action="#{userFilterManager.filter.columns['EMAIL'].toggleOrder()}" value="Email" styleClass="btn btn-small btn-block">
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['EMAIL'].sortOrder == 'ASCENDING'}">
+                    			<i class="icon-arrow-up"> </i>
+                    		</f:verbatim>
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['EMAIL'].sortOrder == 'DESCENDING'}">
+                    			<i class="icon-arrow-down"> </i>
+                    		</f:verbatim>
+							<h:outputText value="#{userFilterManager.filter.columns['EMAIL'].sortPosition + 1}"
+                    			rendered="#{userFilterManager.filter.columns['EMAIL'].sortPosition gt -1}"
+                    			styleClass="label"/>
+                    	</h:commandLink>
+                        <h:inputText id="emailFilter" value="#{userFilterManager.filter.columns['EMAIL'].filter}" >
+                        	<f:ajax event="change" execute="emailFilter" render="usertable" />
+                        </h:inputText>                        
+                    </f:facet>
+                    #{user.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                         <h:commandLink action="#{userFilterManager.filter.columns['ROLE'].toggleOrder()}" value="Rolle" styleClass="btn btn-small btn-block">
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['ROLE'].sortOrder == 'ASCENDING'}">
+                    			<i class="icon-arrow-up"> </i>
+                    		</f:verbatim>
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['ROLE'].sortOrder == 'DESCENDING'}">
+                    			<i class="icon-arrow-down"> </i>
+                    		</f:verbatim>
+							<h:outputText value="#{userFilterManager.filter.columns['ROLE'].sortPosition + 1}"
+                    			rendered="#{userFilterManager.filter.columns['ROLE'].sortPosition gt -1}"
+                    			styleClass="label"/>
+                    	</h:commandLink>                    
+                         <h:selectOneMenu id="roleFilter" value="#{userFilterManager.filter.columns['ROLE'].filter}" styleClass="vehicle">
+		    				<f:selectItem itemLabel="" itemValue="#{null}"/>
+		    				<f:selectItem itemLabel="Kunde" itemValue="CUSTOMER"/>
+		    				<f:selectItem itemLabel="Agent" itemValue="AGENT"/>
+		    				<f:selectItem itemLabel="Administrator" itemValue="ADMIN"/>
+                        	<f:ajax event="change" execute="roleFilter" render="usertable" />
+    					</h:selectOneMenu>
+                    </f:facet>
+                    #{user.role}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                         <h:commandLink 
+                         	action="#{userFilterManager.filter.columns['FIRSTNAME'].toggleOrder()}" 
+                         	value="Vorname" 
+                         	styleClass="btn btn-small btn-block">
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['FIRSTNAME'].sortOrder == 'ASCENDING'}">
+                    			<i class="icon-arrow-up"> </i>
+                    		</f:verbatim>
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['FIRSTNAME'].sortOrder == 'DESCENDING'}">
+                    			<i class="icon-arrow-down"> </i>
+                    		</f:verbatim>
+							<h:outputText value="#{userFilterManager.filter.columns['FIRSTNAME'].sortPosition + 1}"
+                    			rendered="#{userFilterManager.filter.columns['FIRSTNAME'].sortPosition gt -1}"
+                    			styleClass="label"/>
+                    	</h:commandLink>                       
+                        <h:inputText id="firstFilter" value="#{userFilterManager.filter.columns['FIRSTNAME'].filter}" >
+                        	<f:ajax event="change" execute="firstFilter" render="usertable" />
+                        </h:inputText>                        
+                    </f:facet>
+                    #{user.firstname}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                         <h:commandLink 
+                         	action="#{userFilterManager.filter.columns['SURENAME'].toggleOrder()}" 
+                         	value="Nachname" 
+                         	styleClass="btn btn-small btn-block">
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['SURENAME'].sortOrder == 'ASCENDING'}">
+                    			<i class="icon-arrow-up"> </i>
+                    		</f:verbatim>
+                    		<f:verbatim rendered="#{userFilterManager.filter.columns['SURENAME'].sortOrder == 'DESCENDING'}">
+                    			<i class="icon-arrow-down"> </i>
+                    		</f:verbatim>
+							<h:outputText value="#{userFilterManager.filter.columns['SURENAME'].sortPosition + 1}"
+                    			rendered="#{userFilterManager.filter.columns['SURENAME'].sortPosition gt -1}"
+                    			styleClass="label"/>
+                    	</h:commandLink>   
+                    	<h:inputText id="sureFilter" value="#{userFilterManager.filter.columns['SURENAME'].filter}" >
+                        	<f:ajax event="change" execute="sureFilter" render="usertable" />
+                        </h:inputText>                        
+                    </f:facet>
+                    #{user.surename}
+                </h:column>
+            </h:dataTable>
+            <hr/>
+            <h:commandLink action="#{userFilterManager.startAddingNewUser()}" styleClass="btn btn-primary">Neuen Nutzer anlegen</h:commandLink>
+        </h:form>
+    </ui:define>
+</ui:composition>

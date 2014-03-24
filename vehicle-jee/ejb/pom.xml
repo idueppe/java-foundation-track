@@ -41,6 +41,11 @@
 
     <dependencies>
 
+		<dependency>
+			<groupId>de.crowdcode.jee</groupId>
+			<artifactId>vehicle-jee-api</artifactId>
+		</dependency>
+
         <!-- Declare the APIs we depend on and need for compilation. All of 
             them are provided by JBoss AS 7 -->
 

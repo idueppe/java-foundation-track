@@ -16,30 +16,35 @@
  */
 package de.crowdcode.jee.service;
 
-import de.crowdcode.jee.model.Member;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import java.util.logging.Logger;
+
+import de.crowdcode.jee.model.Member;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
+@Named
 @Stateless
-public class MemberRegistration {
+public class MemberRegistration
+{
 
-    @Inject
-    private Logger log;
+	@Inject
+	private Logger			log;
 
-    @Inject
-    private EntityManager em;
+	@Inject
+	private EntityManager	em;
 
-    @Inject
-    private Event<Member> memberEventSrc;
+	@Inject
+	private Event<Member>	memberEventSrc;
 
-    public void register(Member member) throws Exception {
-        log.info("Registering " + member.getName());
-        em.persist(member);
-        memberEventSrc.fire(member);
-    }
+	public void register(Member member) throws Exception
+	{
+		log.info("Registering " + member.getName());
+		em.persist(member);
+		memberEventSrc.fire(member);
+	}
 }
